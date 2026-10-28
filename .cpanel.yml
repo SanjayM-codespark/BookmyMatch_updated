@@ -2,10 +2,7 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/bookmymatch/public_html/
-    # Copy the CodeIgniter app folder
     - /bin/cp -R app $DEPLOYPATH
-    # Copy the public folder contents (CSS, JS, index.php) to the web root
     - /bin/cp -R public/* $DEPLOYPATH
-    # Copy writable and vendor (if you have vendor on git)
     - /bin/cp -R writable $DEPLOYPATH
-    - /bin/cp -R vendor $DEPLOYPATH
+    - /bin/cp composer.json $DEPLOYPATH
