@@ -2642,7 +2642,11 @@ class Organizer extends Controller
 
 		// Players who registered after the draw was generated
 		$missing_players = $this->_sync_bracket_players($event_id);
-		$rounds          = $db->table('tbl_rounds')
+
+		// Players left without a match (odd count) get a match against an empty slot -> Bye
+		$this->_complete_bracket((int) $event_id);
+
+		$rounds          =$db->table('tbl_rounds')
 			->where('round_event', $event_id)
 			->orderBy('round_id', 'ASC')
 			->get()->getResult();
@@ -3140,6 +3144,119 @@ class Organizer extends Controller
 	}
 
 	/**
+	 * Make sure no player/team is left out of a round.
+	 * - Round 1: every registered unit must sit in a match.
+	 * - Later rounds: every winner of the previous round must sit in a match.
+	 * A unit without a place gets a match of its own against an empty slot (organizer
+	 * then gives it a Bye). Once a round is fully decided and the next one does not
+	 * exist, the next round is created from its winners (odd one out gets a Bye match).
+	 * Returns true when matches/rounds were added so the page can refresh.
+	 */
+	private function _complete_bracket(int $event_id): bool
+	{
+		$db  = \Config\Database::connect();
+		$now = date('Y-m-d H:i:s');
+
+		$event = $db->table('listing_events le')
+			->select('le.*, COALESCE(l.listing_sports_id, 0) AS listing_sports_id, s.sports_name')
+			->join('listings l', 'l.listing_id = le.listing_event_listing_id', 'left')
+			->join('sports s', 's.sports_id = l.listing_sports_id', 'left')
+			->where('le.listing_event_id', $event_id)
+			->get()->getRow();
+		if (!$event) return false;
+
+		$rounds = $db->table('tbl_rounds')->where('round_event', $event_id)->orderBy('round_id', 'ASC')->get()->getResult();
+		if (empty($rounds)) return false;
+
+		$type    = strtolower($event->listing_event_type ?? 'individual');
+		$is_team = ($type === 'team');
+		$max     = (int) ($event->listing_event_max_players ?? 0);
+		if ($max <= 0) $max = $is_team ? 11 : 1;
+		$f1 = $is_team ? 'match_team1_id' : 'match_individual1_id';
+		$f2 = $is_team ? 'match_team2_id' : 'match_individual2_id';
+		$fw = $is_team ? 'match_winning_team_id' : 'match_winning_individual_id';
+
+		$participants = $db->table('participants')->where('participant_event_id', $event_id)->orderBy('participant_id', 'ASC')->get()->getResult();
+		$units = $this->_buildBracketUnits($db, $event, $participants, $type, $max);
+		$everyone = array_values(array_unique(array_filter(array_map(fn($u) => (int) $u['id'], $units))));
+
+		$changed = false;
+		$addMatches = function (int $round_id, array $ids, string $date) use ($db, $event, $event_id, $type, $is_team, $now, &$changed) {
+			foreach (array_chunk($ids, 2) as $pair) {
+				$a = (int) $pair[0];
+				$b = (int) ($pair[1] ?? 0);
+				$db->table('matches')->insert([
+					'match_type'                  => $is_team ? 'team' : 'individual',
+					'match_round_id'              => $round_id,
+					'match_tournament'            => $event->listing_event_listing_id,
+					'match_event'                 => $event_id,
+					'match_sport_id'              => (int) ($event->listing_sports_id ?? 0),
+					'match_team1_id'              => $is_team ? $a : 0,
+					'match_team2_id'              => $is_team ? $b : 0,
+					'match_individual1_id'        => $is_team ? 0 : $a,
+					'match_individual2_id'        => $is_team ? 0 : $b,
+					'match_date'                  => $date,
+					'match_status'                => 1,
+					'match_winning_individual_id' => 0,
+					'match_winning_team_id'       => 0,
+					'loss'                        => 0,
+					'match_created_at'            => $now,
+					'match_updated_at'            => $now,
+				]);
+				$changed = true;
+			}
+		};
+
+		$entrants = $everyone;
+		$ms = [];
+		foreach ($rounds as $idx => $rnd) {
+			$ms = $db->table('matches')->where('match_round_id', $rnd->round_id)->orderBy('match_id', 'ASC')->get()->getResult();
+
+			// Round 1 with no matches is handled by the auto draw, not here
+			if ($idx === 0 && empty($ms)) return false;
+
+			$placed = [];
+			foreach ($ms as $m) {
+				foreach ([$f1, $f2] as $f) {
+					if ((int) $m->$f > 0) $placed[(int) $m->$f] = true;
+				}
+			}
+			$missing = array_values(array_filter($entrants, fn($id) => !isset($placed[$id])));
+			if (!empty($missing)) {
+				$date = !empty($ms) ? $ms[0]->match_date : date('Y-m-d 08:00:00');
+				$addMatches((int) $rnd->round_id, $missing, $date);
+				$ms = $db->table('matches')->where('match_round_id', $rnd->round_id)->orderBy('match_id', 'ASC')->get()->getResult();
+			}
+
+			$entrants = [];
+			foreach ($ms as $m) {
+				$w = (int) $m->$fw;
+				if ($w > 0) $entrants[] = $w;
+			}
+			$entrants = array_values(array_unique($entrants));
+		}
+
+		// Last round fully decided -> open the next one from its winners
+		$last = end($rounds);
+		$all_decided = !empty($ms) && count(array_filter($ms, fn($m) => (int) $m->$fw > 0)) === count($ms);
+		if ($all_decided && count($entrants) >= 2 && strtolower($last->round_name) !== 'final') {
+			$name = $this->_getRoundName(count($entrants), (string) ($event->sports_name ?? ''), count($rounds));
+			$db->table('tbl_rounds')->insert([
+				'round_name'       => $name,
+				'round_group'      => (int) $rounds[0]->round_group,
+				'round_tournament' => $event->listing_event_listing_id,
+				'round_event'      => $event_id,
+				'round_status'     => 1,
+				'round_created_at' => $now,
+				'round_updated_at' => $now,
+			]);
+			$addMatches((int) $db->insertID(), $entrants, $ms[0]->match_date);
+		}
+
+		return $changed;
+	}
+
+	/**
 	 * Put players who registered late into Round 1 slots that are still empty.
 	 * Decided matches are never touched; free byes are undone so the new
 	 * player actually gets to play, then re-applied if a bye is unavoidable.
@@ -3358,6 +3475,14 @@ class Organizer extends Controller
 				->get()->getResult();
 
 			$target_match = $next_matches[$target_match_index - 1] ?? null;
+			// Never overwrite a slot held by someone else (rounds with an odd count are
+			// not laid out by index); _complete_bracket places such winners afterwards.
+			$target_slot_field = $is_team ? ($slot === 1 ? 'match_team1_id' : 'match_team2_id')
+			                              : ($slot === 1 ? 'match_individual1_id' : 'match_individual2_id');
+			$slot_holder = $target_match ? (int) $target_match->$target_slot_field : 0;
+			if ($target_match && $slot_holder > 0 && $slot_holder !== (int) $loser_id && $slot_holder !== $winner_id) {
+				$target_match = null;
+			}
 			if ($target_match) {
 				$next_update = ['match_updated_at' => $now];
 				if ($is_team) {
@@ -3375,6 +3500,9 @@ class Organizer extends Controller
 				];
 			}
 		}
+
+		// Place any winner that has no seat yet / open the next round when this one is done
+		$structure_changed = $this->_complete_bracket((int) $match->match_event);
 
 		// Winner details
 		$winner_name = 'Winner';
@@ -3405,6 +3533,7 @@ class Organizer extends Controller
 			'message'      => $winner_name . ($result_type === 'walkover' ? ' advances by walkover'
 				: ($result_type === 'bye' ? ' advances with a bye' : ' declared winner')),
 			'result_type'  => $result_type,
+			'structure_changed' => $structure_changed,
 			'match_id'     => $match_id,
 			'winner_id'    => $winner_id,
 			'winner_name'  => $winner_name,

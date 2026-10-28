@@ -999,6 +999,9 @@ function setBracketWinner(matchId, winnerId, loserId, playerSlot, resultType, re
     }, function(res){
         if (res.status) {
             applyResultTag(matchId, res.result_type, playerSlot);
+
+            // New match/round was added for a player who had no place -> reload the bracket
+            if (res.structure_changed) { location.reload(); return; }
             // Update button styles
             if (playerSlot === 1) {
                 $btn1.addClass('is-selected').removeClass('is-subdued');
