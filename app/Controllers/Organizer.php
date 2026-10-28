@@ -2657,11 +2657,8 @@ class Organizer extends Controller
 			->where('participant_event_id', $event_id)
 			->orderBy('participant_id', 'ASC')
 			->get()->getResult();
-		$active_count = $this->_countActiveUnits(
-			$db,
-			(int) $event_id,
-			$this->_buildBracketUnits($db, $event, $active_parts, $active_type, $active_max)
-		);
+		$all_units    = $this->_buildBracketUnits($db, $event, $active_parts, $active_type, $active_max);
+		$active_count = $this->_countActiveUnits($db, (int) $event_id, $all_units);
 
 		$total_bracket_players = 0;
 		$round_stats = [];
@@ -2731,16 +2728,21 @@ class Organizer extends Controller
 		}
 
 		// Units currently seeded into Round 1 -> options for the player-swap dropdown
+		// All registered units (not just those currently seeded), so a player replaced
+		// out of a slot can still be picked again.
 		$round1_units = [];
+		foreach ($all_units as $u) {
+			if ((int) ($u['id'] ?? 0) > 0) $round1_units[(int) $u['id']] = $u['name'];
+		}
 		if (!empty($rounds) && !empty($rounds[0]->matches)) {
 			foreach ($rounds[0]->matches as $r1m) {
 				$u1_id = $is_individual ? (int) $r1m->match_individual1_id : (int) $r1m->match_team1_id;
 				$u2_id = $is_individual ? (int) $r1m->match_individual2_id : (int) $r1m->match_team2_id;
-				if ($u1_id > 0) $round1_units[$u1_id] = $r1m->p1_display_name;
-				if ($u2_id > 0) $round1_units[$u2_id] = $r1m->p2_display_name;
+				if ($u1_id > 0 && !isset($round1_units[$u1_id])) $round1_units[$u1_id] = $r1m->p1_display_name;
+				if ($u2_id > 0 && !isset($round1_units[$u2_id])) $round1_units[$u2_id] = $r1m->p2_display_name;
 			}
-			asort($round1_units, SORT_STRING | SORT_FLAG_CASE);
 		}
+		asort($round1_units, SORT_STRING | SORT_FLAG_CASE);
 
 		// Final winner - shown at the top with the winner icon
 		$champion    = ['id' => 0, 'name' => ''];
@@ -3415,8 +3417,8 @@ class Organizer extends Controller
 
 	/**
 	 * Round 1 only: place a different unit (player/team) into one match slot.
-	 * If that unit already occupies another Round 1 slot, the two units are
-	 * swapped so nobody ends up duplicated or missing from the bracket.
+	 * Only that slot is replaced; a unit already in another match is left there
+	 * (duplicates are allowed and flagged on the page).
 	 */
 	public function swap_bracket_player()
 	{
@@ -3467,47 +3469,12 @@ class Organizer extends Controller
 			return $this->response->setJSON(['status' => true, 'message' => 'No change']);
 		}
 
-		// Find wherever the picked unit currently sits in Round 1, so it can be swapped out
-		$partner       = null;
-		$partner_field = null;
-		if ($new_id > 0) {
-			$found = $db->table('matches')
-				->where('match_round_id', $match->match_round_id)
-				->groupStart()
-					->where($p1_field, $new_id)
-					->orWhere($p2_field, $new_id)
-				->groupEnd()
-				->get()->getResult();
-			$partner = $found[0] ?? null;
-
-			if ($partner) {
-				$partner_field = ((int) $partner->$p1_field === $new_id) ? $p1_field : $p2_field;
-
-				if ((int) $partner->match_id !== $match_id && (int) $partner->$winner_field > 0) {
-					return $this->response->setJSON(['status' => false, 'message' => 'Cannot swap with a match that already has a result.']);
-				}
-			}
-		}
-
+		// Only this slot changes. The picked unit is NOT moved out of any other match,
+		// so it may now appear in several matches - the page highlights those duplicates.
 		$db->table('matches')->where('match_id', $match_id)->update([
 			$slot_field        => $new_id,
 			'match_updated_at' => $now,
 		]);
-
-		$swapped_to = null;
-		if ($partner) {
-			if ((int) $partner->match_id === $match_id) {
-				// Picked the other slot's own occupant -> it takes this slot's old unit
-				$db->table('matches')->where('match_id', $match_id)->update([$other_field => $old_id]);
-				$swapped_to = ['match_id' => $match_id, 'slot' => ($other_field === $p1_field) ? 1 : 2];
-			} else {
-				$db->table('matches')->where('match_id', $partner->match_id)->update([
-					$partner_field     => $old_id,
-					'match_updated_at' => $now,
-				]);
-				$swapped_to = ['match_id' => (int) $partner->match_id, 'slot' => ($partner_field === $p1_field) ? 1 : 2];
-			}
-		}
 
 		$name_table = $is_team ? 'teams' : 'participants';
 		$name_col   = $is_team ? 'team_name' : 'participant_name';
@@ -3528,7 +3495,6 @@ class Organizer extends Controller
 			'new_name'    => $new_id ? ($names[$new_id] ?? 'TBD') : 'TBD',
 			'old_id'      => $old_id,
 			'old_name'    => $old_id ? ($names[$old_id] ?? 'TBD') : 'TBD',
-			'swapped_to'  => $swapped_to,
 		]);
 	}
 

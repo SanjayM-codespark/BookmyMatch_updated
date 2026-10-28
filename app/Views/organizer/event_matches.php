@@ -256,6 +256,58 @@
     outline: none;
     border-color: #2563EB;
 }
+.player-swap-btn {
+    margin-top: 3px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #2563EB;
+    background: #EFF6FF;
+    border: 1px solid #BFDBFE;
+    border-radius: 5px;
+    padding: 2px 8px;
+    cursor: pointer;
+}
+.player-swap-btn:hover { border-color: #2563EB; }
+
+/* Searchable player picker */
+#playerPicker {
+    display: none;
+    position: fixed;
+    z-index: 10001;
+    width: 240px;
+    background: #fff;
+    border: 1px solid #CBD5E1;
+    border-radius: 8px;
+    box-shadow: 0 10px 28px rgba(15,23,42,.18);
+    padding: 8px;
+}
+#playerPicker input {
+    width: 100%;
+    border: 1px solid #CBD5E1;
+    border-radius: 6px;
+    padding: 5px 8px;
+    font-size: 12px;
+    margin-bottom: 6px;
+}
+#playerPickerList { max-height: 220px; overflow-y: auto; }
+.picker-item {
+    padding: 5px 8px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    gap: 6px;
+}
+.picker-item:hover { background: #EFF6FF; }
+.picker-item.is-current { background: #DBEAFE; color: #1D4ED8; }
+.picker-item small { color: #B45309; font-weight: 700; white-space: nowrap; }
+
+/* Same player in more than one match of a round */
+.card-player-row.is-duplicate { background: #FEF2F2; box-shadow: inset 3px 0 0 #DC2626; }
+.dup-note { display: none; font-size: 10px; font-weight: 700; color: #B91C1C; margin-top: 2px; }
+.dup-note.show { display: block; }
 
 /* Scores */
 .player-score-txt {
@@ -630,15 +682,11 @@ $unit_label    = $is_team ? 'teams' : 'players';
                             <span class="player-name-txt" id="p1-name-<?= $m->match_id ?>"><?= esc($p1_name) ?></span>
                             <span class="player-sub-txt"><?= $is_team ? 'Team 1' : 'Player 1' ?></span>
                             <?php if ($r_idx === 0): ?>
-                            <select class="player-swap-select" id="p1-swap-<?= $m->match_id ?>"
+                            <button type="button" class="player-swap-btn" id="p1-swap-<?= $m->match_id ?>"
                                     data-match-id="<?= $m->match_id ?>" data-slot="1"
-                                    onchange="swapBracketPlayer(this)">
-                                <option value="0" <?= $p1_id <= 0 ? 'selected' : '' ?>>-- TBD --</option>
-                                <?php foreach (($round1_units ?? []) as $u_id => $u_name): ?>
-                                <option value="<?= $u_id ?>" <?= (int)$p1_id === (int)$u_id ? 'selected' : '' ?>><?= esc($u_name) ?></option>
-                                <?php endforeach ?>
-                            </select>
+                                    onclick="openPlayerPicker(this)"><i class="fa-solid fa-pen"></i> Change <i class="fa-solid fa-chevron-down" style="font-size:9px;"></i></button>
                             <?php endif ?>
+                            <span class="dup-note" id="p1-dup-<?= $m->match_id ?>"></span>
                         </div>
                     </div>
                     <div class="player-score-txt"
@@ -664,15 +712,11 @@ $unit_label    = $is_team ? 'teams' : 'players';
                             <span class="player-name-txt" id="p2-name-<?= $m->match_id ?>"><?= esc($p2_name) ?></span>
                             <span class="player-sub-txt"><?= $is_team ? 'Team 2' : 'Player 2' ?></span>
                             <?php if ($r_idx === 0): ?>
-                            <select class="player-swap-select" id="p2-swap-<?= $m->match_id ?>"
+                            <button type="button" class="player-swap-btn" id="p2-swap-<?= $m->match_id ?>"
                                     data-match-id="<?= $m->match_id ?>" data-slot="2"
-                                    onchange="swapBracketPlayer(this)">
-                                <option value="0" <?= $p2_id <= 0 ? 'selected' : '' ?>>-- TBD --</option>
-                                <?php foreach (($round1_units ?? []) as $u_id => $u_name): ?>
-                                <option value="<?= $u_id ?>" <?= (int)$p2_id === (int)$u_id ? 'selected' : '' ?>><?= esc($u_name) ?></option>
-                                <?php endforeach ?>
-                            </select>
+                                    onclick="openPlayerPicker(this)"><i class="fa-solid fa-pen"></i> Change <i class="fa-solid fa-chevron-down" style="font-size:9px;"></i></button>
                             <?php endif ?>
+                            <span class="dup-note" id="p2-dup-<?= $m->match_id ?>"></span>
                         </div>
                     </div>
                     <div class="player-score-txt"
@@ -809,6 +853,12 @@ $unit_label    = $is_team ? 'teams' : 'players';
     </div>
 </div>
 
+<!-- Searchable player picker (positioned under the clicked "Change" button) -->
+<div id="playerPicker">
+    <input type="text" id="playerPickerSearch" placeholder="Search player..." autocomplete="off">
+    <div id="playerPickerList"></div>
+</div>
+
 <!-- Walkover Modal -->
 <div id="walkoverModalBackdrop" style="display:none;position:fixed;inset:0;background:rgba(15,23,42,0.6);z-index:10000;align-items:center;justify-content:center;padding:16px;">
     <div style="background:#fff;border-radius:12px;padding:22px;width:100%;max-width:400px;">
@@ -858,10 +908,8 @@ $(document).ready(function(){
         saveScoreModalSubmit();
     });
 
-    // Remember each Round 1 swap-dropdown's current value so a failed save can revert to it
-    $('.player-swap-select').each(function(){
-        $(this).data('prev-value', $(this).val());
-    });
+    // Flag players placed in more than one match of the same round
+    refreshDuplicates();
 });
 
 // Scroll to round column on clicking pill
@@ -995,6 +1043,7 @@ function setBracketWinner(matchId, winnerId, loserId, playerSlot, resultType, re
 
             // Redraw bracket lines
             drawConnectors();
+            refreshDuplicates();
 
             // Live "X Active" badge (units still in contention)
             if (typeof res.active_count !== 'undefined') {
@@ -1088,43 +1137,104 @@ function giveBye(matchId) {
     setBracketWinner(matchId, c.p1 || c.p2, 0, slot, 'bye', '');
 }
 
-// Round 1 only: pick a different player/team for a match slot from the dropdown.
-// If that unit already sits in another Round 1 slot, the backend swaps the two
-// so nobody ends up duplicated or missing from the bracket.
-function swapBracketPlayer(selectEl) {
-    const $select  = $(selectEl);
-    const matchId  = $select.data('match-id');
-    const slot     = parseInt($select.data('slot'), 10);
-    const newId    = parseInt($select.val(), 10) || 0;
-    const prevId   = parseInt($select.data('prev-value'), 10) || 0;
+// All registered players/teams (id => name) for the searchable picker
+const PICKER_UNITS = <?= json_encode(array_map(fn($id, $n) => ['id' => (int) $id, 'name' => (string) $n], array_keys($round1_units ?? []), array_values($round1_units ?? []))) ?>;
+let pickerTarget = null; // {matchId, slot, $btn}
 
+function currentSlotId(matchId, slot) {
+    return parseInt($('#bracket-card-' + matchId).attr('data-p' + slot + '-id'), 10) || 0;
+}
+
+// Count how many matches of each round each unit sits in -> {roundId: {unitId: [matchIds]}}
+function roundOccupancy() {
+    const occ = {};
+    $('.match-bracket-card').each(function(){
+        const $c = $(this), rid = $c.data('round-id'), mid = $c.data('match-id');
+        occ[rid] = occ[rid] || {};
+        [1, 2].forEach(function(s){
+            const id = parseInt($c.attr('data-p' + s + '-id'), 10) || 0;
+            if (id > 0) (occ[rid][id] = occ[rid][id] || []).push(mid);
+        });
+    });
+    return occ;
+}
+
+// Highlight a player who appears in more than one match of the same round
+function refreshDuplicates() {
+    const occ = roundOccupancy();
+    $('.card-player-row').removeClass('is-duplicate');
+    $('.dup-note').removeClass('show').text('');
+    $('.match-bracket-card').each(function(){
+        const $c = $(this), rid = $c.data('round-id'), mid = $c.data('match-id');
+        [1, 2].forEach(function(s){
+            const id = parseInt($c.attr('data-p' + s + '-id'), 10) || 0;
+            const list = (occ[rid] && occ[rid][id]) || [];
+            if (id > 0 && list.length > 1) {
+                const others = list.filter(function(m){ return m !== mid; })
+                    .map(function(m){ return 'Match ' + (parseInt($('#bracket-card-' + m).data('match-idx'), 10) + 1); });
+                $('#p' + s + '-row-' + mid).addClass('is-duplicate');
+                $('#p' + s + '-dup-' + mid).text('Also in ' + others.join(', ')).addClass('show');
+            }
+        });
+    });
+}
+
+function openPlayerPicker(btn) {
+    const $btn = $(btn);
+    pickerTarget = { matchId: $btn.data('match-id'), slot: parseInt($btn.data('slot'), 10), $btn: $btn };
+    const $p = $('#playerPicker');
+    const r = btn.getBoundingClientRect();
+    const top = (r.bottom + 270 > window.innerHeight) ? Math.max(8, r.top - 270) : r.bottom + 4;
+    $p.css({ top: top, left: Math.max(8, Math.min(r.left, window.innerWidth - 250)) }).show();
+    $('#playerPickerSearch').val('').trigger('focus');
+    renderPickerList('');
+}
+
+function renderPickerList(q) {
+    q = (q || '').toLowerCase();
+    const cur = pickerTarget ? currentSlotId(pickerTarget.matchId, pickerTarget.slot) : 0;
+    const rid = pickerTarget ? $('#bracket-card-' + pickerTarget.matchId).data('round-id') : 0;
+    const occ = roundOccupancy()[rid] || {};
+    const $l = $('#playerPickerList').empty();
+    $('<div class="picker-item"></div>').text('-- TBD (empty) --').data('id', 0).appendTo($l);
+    PICKER_UNITS.forEach(function(u){
+        if (q && u.name.toLowerCase().indexOf(q) === -1) return;
+        const $i = $('<div class="picker-item"></div>').data('id', u.id).append($('<span></span>').text(u.name));
+        if (u.id === cur) $i.addClass('is-current');
+        else if ((occ[u.id] || []).length) $i.append($('<small></small>').text('in ' + occ[u.id].length + ' match' + (occ[u.id].length > 1 ? 'es' : '')));
+        $i.appendTo($l);
+    });
+}
+
+$(document).on('input', '#playerPickerSearch', function(){ renderPickerList($(this).val()); });
+$(document).on('click', '.picker-item', function(){ pickPlayer($(this).data('id')); });
+$(document).on('mousedown', function(e){
+    if (!$(e.target).closest('#playerPicker, .player-swap-btn').length) $('#playerPicker').hide();
+});
+
+// Replace only the clicked slot; the picked player is left in any other match he/she is already in
+function pickPlayer(newId) {
+    if (!pickerTarget) return;
+    const t = pickerTarget, prevId = currentSlotId(t.matchId, t.slot);
+    $('#playerPicker').hide();
     if (newId === prevId) return;
 
-    $select.prop('disabled', true);
-
+    t.$btn.prop('disabled', true);
     $.post(BASE + '/organizer/swap_bracket_player', {
-        match_id: matchId,
-        slot: slot,
+        match_id: t.matchId,
+        slot: t.slot,
         unit_id: newId
     }, function(res){
-        $select.prop('disabled', false);
-
+        t.$btn.prop('disabled', false);
         if (!res.status) {
             alert(res.message || 'Error updating player.');
-            $select.val(prevId);
             return;
         }
-
-        applyBracketSlot(matchId, slot, res.new_id, res.new_name);
-
-        if (res.swapped_to) {
-            applyBracketSlot(res.swapped_to.match_id, res.swapped_to.slot, res.old_id, res.old_name);
-        }
-
+        applyBracketSlot(t.matchId, t.slot, res.new_id, res.new_name);
+        refreshDuplicates();
         drawConnectors();
     }, 'json').fail(function(){
-        $select.prop('disabled', false);
-        $select.val(prevId);
+        t.$btn.prop('disabled', false);
         alert('Server connection error while updating player.');
     });
 }
@@ -1140,12 +1250,6 @@ function applyBracketSlot(matchId, slot, unitId, unitName) {
     $('#p' + slot + '-avatar-' + matchId).text(avatar);
     $card.attr('data-p' + slot + '-id', unitId);
     $card.attr('data-p' + slot + '-name', name);
-
-    const $sel = $('#p' + slot + '-swap-' + matchId);
-    if ($sel.length) {
-        $sel.val(unitId);
-        $sel.data('prev-value', unitId);
-    }
 
     const otherSlot = (slot === 1) ? 2 : 1;
     const otherId   = parseInt($card.attr('data-p' + otherSlot + '-id'), 10) || 0;
