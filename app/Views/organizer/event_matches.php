@@ -333,6 +333,45 @@
     color: #64748B;
 }
 
+/* Walkover / Bye */
+.card-special-actions {
+    display: flex;
+    gap: 8px;
+    padding: 0 14px 12px;
+    background: #FAFAFA;
+}
+.btn-special-action {
+    flex: 1;
+    background: #FFFFFF;
+    color: #475569;
+    border: 1px dashed #CBD5E1;
+    border-radius: 6px;
+    padding: 5px 8px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+}
+.btn-special-action:hover {
+    background: #FFF7ED;
+    border-color: #FDBA74;
+    color: #C2410C;
+}
+.result-tag {
+    display: none;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .4px;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    margin-left: 6px;
+    border-radius: 10px;
+    background: #FEF3C7;
+    color: #B45309;
+}
+.result-tag.is-bye { background: #E0E7FF; color: #4338CA; }
+.result-tag.show { display: inline-block; }
+
 /* Score Edit Modal */
 #scoreEditModalBackdrop {
     display: none;
@@ -553,6 +592,14 @@ $unit_label    = $is_team ? 'teams' : 'players';
                 $p1_is_winner = ($winner_id > 0 && $winner_id === (int)$p1_id);
                 $p2_is_winner = ($winner_id > 0 && $winner_id === (int)$p2_id);
 
+                // Walkover / bye results are tagged in match_winning_desc
+                $res_type = ($winner_id > 0) ? ($m->score_data['type'] ?? '') : '';
+                if (!in_array($res_type, ['walkover', 'bye'], true)) $res_type = '';
+                if ($res_type !== '') {
+                    $s1_str = $p1_is_winner ? ($res_type === 'bye' ? 'BYE' : 'W/O') : '-';
+                    $s2_str = $p2_is_winner ? ($res_type === 'bye' ? 'BYE' : 'W/O') : '-';
+                }
+
                 $date_str = !empty($m->match_date) ? date('d M, h:i A', strtotime($m->match_date)) : '07 May, 08:00 AM';
             ?>
             <div class="match-bracket-card <?= $winner_id > 0 ? 'has-winner' : '' ?>"
@@ -569,7 +616,7 @@ $unit_label    = $is_team ? 'teams' : 'players';
 
                 <!-- Top bar -->
                 <div class="card-header-bar">
-                    <span class="card-match-title">Match <?= ($m_idx + 1) ?></span>
+                    <span class="card-match-title">Match <?= ($m_idx + 1) ?><span class="result-tag <?= $res_type === 'bye' ? 'is-bye' : '' ?> <?= $res_type !== '' ? 'show' : '' ?>" id="result-tag-<?= $m->match_id ?>"><?= $res_type === 'bye' ? 'Bye' : ($res_type === 'walkover' ? 'Walkover' : '') ?></span></span>
                     <span class="card-match-date"><i class="fa-regular fa-clock" style="font-size:10px;margin-right:3px;"></i> <?= $date_str ?></span>
                 </div>
 
@@ -651,6 +698,20 @@ $unit_label    = $is_team ? 'teams' : 'players';
                             onclick="setBracketWinner(<?= $m->match_id ?>, <?= (int)$p2_id ?>, <?= (int)$p1_id ?>, 2)">
                         <?php if ($p2_is_winner): ?><i class="fa-solid fa-trophy" style="font-size:10px;margin-right:3px;"></i><?php endif ?>
                         <span id="btn-win2-txt-<?= $m->match_id ?>"><?= esc($p2_name) ?> Win's</span>
+                    </button>
+                </div>
+
+                <!-- Special results: walkover (opponent absent) / bye (no opponent in draw) -->
+                <div class="card-special-actions">
+                    <button type="button" class="btn-special-action"
+                            title="Opponent absent / withdrew / disqualified - the other player advances"
+                            onclick="openWalkoverModal(<?= $m->match_id ?>)">
+                        <i class="fa-solid fa-person-walking-arrow-right"></i> Walkover
+                    </button>
+                    <button type="button" class="btn-special-action"
+                            title="No opponent in the draw - the player advances without playing"
+                            onclick="giveBye(<?= $m->match_id ?>)">
+                        <i class="fa-solid fa-forward"></i> Bye
                     </button>
                 </div>
 
@@ -748,6 +809,34 @@ $unit_label    = $is_team ? 'teams' : 'players';
     </div>
 </div>
 
+<!-- Walkover Modal -->
+<div id="walkoverModalBackdrop" style="display:none;position:fixed;inset:0;background:rgba(15,23,42,0.6);z-index:10000;align-items:center;justify-content:center;padding:16px;">
+    <div style="background:#fff;border-radius:12px;padding:22px;width:100%;max-width:400px;">
+        <h5 style="font-weight:800;margin-bottom:4px;">Walkover</h5>
+        <p style="font-size:12px;color:#64748B;margin-bottom:14px;">
+            The match is not played. Select the player/team that is <b>present</b> &mdash; they win and advance to the next round.
+        </p>
+        <input type="hidden" id="woMatchId">
+        <label style="display:flex;align-items:center;gap:8px;padding:9px 12px;border:1px solid #E2E8F0;border-radius:8px;margin-bottom:8px;cursor:pointer;">
+            <input type="radio" name="woWinner" value="1"> <span id="woName1" style="font-weight:600;"></span>
+        </label>
+        <label style="display:flex;align-items:center;gap:8px;padding:9px 12px;border:1px solid #E2E8F0;border-radius:8px;margin-bottom:14px;cursor:pointer;">
+            <input type="radio" name="woWinner" value="2"> <span id="woName2" style="font-weight:600;"></span>
+        </label>
+        <label style="font-size:11px;font-weight:600;color:#64748B;display:block;margin-bottom:4px;">Reason for the walkover</label>
+        <select id="woReason" class="form-control" style="border-radius:6px;font-size:13px;margin-bottom:18px;">
+            <option value="No show">Opponent did not show up</option>
+            <option value="Injury">Opponent injured</option>
+            <option value="Withdrawn">Opponent withdrew</option>
+            <option value="Disqualified">Opponent disqualified</option>
+        </select>
+        <div style="display:flex;gap:10px;justify-content:flex-end;">
+            <button type="button" onclick="closeWalkoverModal()" class="btn btn-light btn-sm" style="font-weight:600;">Cancel</button>
+            <button type="button" onclick="submitWalkover()" class="btn btn-sm" style="font-weight:700;background:#EA580C;color:#fff;padding:7px 18px;">Confirm Walkover</button>
+        </div>
+    </div>
+</div>
+
 <?= $this->endSection(); ?>
 
 <?= $this->section('pageScript'); ?>
@@ -841,7 +930,8 @@ function drawConnectors() {
 }
 
 // Pick and save winner
-function setBracketWinner(matchId, winnerId, loserId, playerSlot) {
+function setBracketWinner(matchId, winnerId, loserId, playerSlot, resultType, reason) {
+    resultType = resultType || 'normal';
     if (!winnerId || winnerId === 0) {
         alert('This player is not yet assigned. Please wait for previous round winner or assign players.');
         return;
@@ -855,9 +945,12 @@ function setBracketWinner(matchId, winnerId, loserId, playerSlot) {
     $.post(BASE + '/organizer/save_bracket_winner', {
         match_id: matchId,
         winner_id: winnerId,
-        loser_id: loserId
+        loser_id: loserId,
+        result_type: resultType,
+        reason: reason || ''
     }, function(res){
         if (res.status) {
+            applyResultTag(matchId, res.result_type, playerSlot);
             // Update button styles
             if (playerSlot === 1) {
                 $btn1.addClass('is-selected').removeClass('is-subdued');
@@ -922,6 +1015,77 @@ function setBracketWinner(matchId, winnerId, loserId, playerSlot) {
     }, 'json').fail(function(){
         alert('Server connection error while saving winner.');
     });
+}
+
+// Show/clear the Walkover / Bye tag and the W/O | BYE score text on a card
+function applyResultTag(matchId, resultType, winnerSlot) {
+    const $tag = $('#result-tag-' + matchId);
+    $tag.removeClass('show is-bye');
+    if (resultType === 'walkover' || resultType === 'bye') {
+        $tag.text(resultType === 'bye' ? 'Bye' : 'Walkover').addClass('show');
+        if (resultType === 'bye') $tag.addClass('is-bye');
+        const label = (resultType === 'bye') ? 'BYE' : 'W/O';
+        $('#p' + winnerSlot + '-score-' + matchId).text(label);
+        $('#p' + (winnerSlot === 1 ? 2 : 1) + '-score-' + matchId).text('-');
+    } else {
+        // A normal result replaces an earlier walkover/bye label
+        $('#p1-score-' + matchId + ', #p2-score-' + matchId).each(function(){
+            if (['W/O', 'BYE'].indexOf($(this).text().trim()) !== -1) $(this).text('-  -  -');
+        });
+    }
+}
+
+function walkoverCardInfo(matchId) {
+    const $c = $('#bracket-card-' + matchId);
+    return {
+        p1: parseInt($c.attr('data-p1-id'), 10) || 0,
+        p2: parseInt($c.attr('data-p2-id'), 10) || 0,
+        n1: $c.attr('data-p1-name') || 'TBD',
+        n2: $c.attr('data-p2-name') || 'TBD'
+    };
+}
+
+function openWalkoverModal(matchId) {
+    const c = walkoverCardInfo(matchId);
+    if (!c.p1 || !c.p2) {
+        alert('A walkover needs both players assigned. If there is no opponent, use Bye instead.');
+        return;
+    }
+    $('#woMatchId').val(matchId);
+    $('#woName1').text(c.n1);
+    $('#woName2').text(c.n2);
+    $('input[name="woWinner"]').prop('checked', false);
+    $('#walkoverModalBackdrop').css('display', 'flex');
+}
+
+function closeWalkoverModal() {
+    $('#walkoverModalBackdrop').hide();
+}
+
+function submitWalkover() {
+    const matchId = parseInt($('#woMatchId').val(), 10);
+    const slot = parseInt($('input[name="woWinner"]:checked').val(), 10);
+    if (!slot) { alert('Select the player/team that advances.'); return; }
+    const c = walkoverCardInfo(matchId);
+    const winnerId = (slot === 1) ? c.p1 : c.p2;
+    const loserId  = (slot === 1) ? c.p2 : c.p1;
+    closeWalkoverModal();
+    setBracketWinner(matchId, winnerId, loserId, slot, 'walkover', $('#woReason').val());
+}
+
+// Bye: only valid when exactly one side of the match is assigned
+function giveBye(matchId) {
+    const c = walkoverCardInfo(matchId);
+    if ((c.p1 && c.p2) || (!c.p1 && !c.p2)) {
+        alert(c.p1 && c.p2
+            ? 'Both players are assigned, so this is not a bye. Use Walkover if the opponent is absent.'
+            : 'No player is assigned to this match yet.');
+        return;
+    }
+    const slot = c.p1 ? 1 : 2;
+    const name = c.p1 ? c.n1 : c.n2;
+    if (!confirm(name + ' has no opponent. Give a bye and advance to the next round?')) return;
+    setBracketWinner(matchId, c.p1 || c.p2, 0, slot, 'bye', '');
 }
 
 // Round 1 only: pick a different player/team for a match slot from the dropdown.

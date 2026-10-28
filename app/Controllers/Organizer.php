@@ -3264,11 +3264,48 @@ class Organizer extends Controller
 		$event = $db->table('listing_events')->where('listing_event_id', $match->match_event)->get()->getRow();
 		$is_team = ($event && $event->listing_event_type === 'team');
 
+		// Result type: normal (played), walkover (opponent absent/withdrawn/disqualified)
+		// or bye (no opponent in the draw - player advances unopposed)
+		$result_type = $this->request->getPost('result_type') ?: 'normal';
+		if (!in_array($result_type, ['normal', 'walkover', 'bye'], true)) {
+			return $this->response->setJSON(['status' => false, 'message' => 'Invalid result type']);
+		}
+		$reason = trim((string) $this->request->getPost('reason'));
+		if (!in_array($reason, ['No show', 'Injury', 'Withdrawn', 'Disqualified'], true)) $reason = '';
+
+		$p1_field = $is_team ? 'match_team1_id' : 'match_individual1_id';
+		$p2_field = $is_team ? 'match_team2_id' : 'match_individual2_id';
+		$slot_ids = [(int) $match->$p1_field, (int) $match->$p2_field];
+
+		if (!in_array($winner_id, $slot_ids, true)) {
+			return $this->response->setJSON(['status' => false, 'message' => 'Winner must be one of the players in this match']);
+		}
+		$opponent_id = ($slot_ids[0] === $winner_id) ? $slot_ids[1] : $slot_ids[0];
+
+		if ($result_type === 'walkover' && $opponent_id <= 0) {
+			return $this->response->setJSON(['status' => false, 'message' => 'A walkover needs both players assigned. Use Bye when there is no opponent.']);
+		}
+		if ($result_type === 'bye' && $opponent_id > 0) {
+			return $this->response->setJSON(['status' => false, 'message' => 'A bye is only possible when the opponent slot is empty.']);
+		}
+		if ($result_type === 'walkover') $loser_id = $opponent_id;
+		if ($result_type === 'bye')      $loser_id = 0;
+
 		// 1. Update current match winner and loser
 		$update = [
 			'match_updated_at' => $now,
 			'loss'             => $loser_id,
 		];
+
+		// Keep the result type in match_winning_desc (JSON); a normal result clears an older walkover/bye tag
+		if ($result_type !== 'normal') {
+			$update['match_winning_desc'] = json_encode(['type' => $result_type, 'reason' => $reason]);
+		} else {
+			$old_desc = json_decode((string) $match->match_winning_desc, true);
+			if (is_array($old_desc) && in_array($old_desc['type'] ?? '', ['walkover', 'bye'], true)) {
+				$update['match_winning_desc'] = null;
+			}
+		}
 		if ($is_team) {
 			$update['match_winning_team_id'] = $winner_id;
 		} else {
@@ -3363,7 +3400,9 @@ class Organizer extends Controller
 
 		return $this->response->setJSON([
 			'status'       => true,
-			'message'      => $winner_name . ' declared winner',
+			'message'      => $winner_name . ($result_type === 'walkover' ? ' advances by walkover'
+				: ($result_type === 'bye' ? ' advances with a bye' : ' declared winner')),
+			'result_type'  => $result_type,
 			'match_id'     => $match_id,
 			'winner_id'    => $winner_id,
 			'winner_name'  => $winner_name,
