@@ -1,0 +1,225 @@
+API KEY : twentytwo22bookmymatchtwentytwo22
+
+Basic Authentication
+username : admin
+password : bookmymatch@@22
+----------------------------------------------------------------------
+
+Login
+http://spiderprojects.in/tournament_dev/api/login
+post method
+
+mobile => (int)
+password => (string)
+fcm_id => (string)
+----------------------------------------------------------------------
+
+Create Account
+http://spiderprojects.in/tournament_dev/api/signup
+post method
+
+full_name => (str)
+email => (str)
+mobile => (int)
+password => (string)
+fcm_id => (string)
+
+-----------------------------------------------------------------------
+Account Verify
+http://spiderprojects.in/tournament_dev/api/account_verify
+post method
+
+mobile => (int)
+otp => (int)
+----------------------------------------------------------------------
+
+Forgot password
+http://spiderprojects.in/tournament_dev/api/forgot_password
+post method
+
+mobile => (int)
+----------------------------------------------------------------------
+
+Forgot Password Verification
+http://spiderprojects.in/tournament_dev/api/forgot_password_verification
+post method
+
+mobile => (int)
+otp => (int)
+
+-----------------------------------------------------------------------
+Reset password
+http://spiderprojects.in/tournament_dev/api/reset_password
+post method
+
+user_id => (int)
+password => (string)
+confirm_password => (string)
+-----------------------------------------------------------------------
+Change Password
+http://spiderprojects.in/tournament_dev/api/change_password
+post method
+
+user_id => (int)
+current_password => (int)
+new_password => (int)
+confirm_new_password => (int)
+-----------------------------------------------------------------------
+Upload Profile Image
+http://spiderprojects.in/tournament_dev/api/upload_profile_image
+post method
+
+user_id => (int)
+image => (file)
+-----------------------------------------------------------------------
+Edit or Update Profile
+http://spiderprojects.in/tournament_dev/api/profile_update
+post method
+
+user_id => (int)
+full_name => (str)
+email => (str)
+mobile => (int)
+address => (str)
+-----------------------------------------------------------------------
+Get Profile details
+http://spiderprojects.in/tournament_dev/api/profile_data/23
+GET method
+
+----------------------------------------------------------------------
+
+Get Countries
+http://spiderprojects.in/tournament_dev/api/get_countries
+GET method
+
+------------------------------------------------------------------------------------
+
+Get All Cities
+https://spiderprojects.in/tournament_dev/api/get_cities
+GET method
+
+------------------------------------------------------------------------------------
+
+Get Cities by country_id
+https://spiderprojects.in/tournament_dev/api/get_cities?country_id={int}
+GET method
+------------------------------------------------------------------------------------
+
+Get All Sports
+https://spiderprojects.in/tournament_dev/api/sports
+GET method
+------------------------------------------------------------------------------------
+
+Get Sport by sports_id
+https://spiderprojects.in/tournament_dev/api/sports/{sports_id}
+GET method
+
+------------------------------------------------------------------------------------
+
+Get Tournament List
+https://spiderprojects.in/tournament_dev/api/get_tournaments
+POST method
+
+limit => (int) 
+page => (int)
+city_id => (int) optional
+country_id => (int) optional
+sports_id => (int) optional
+status => (completed or upcoming) optional
+query => (sting) optional -> this is for search value
+
+-------------------------------------------------------------------------------------
+Tournament Details
+https://spiderprojects.in/tournament_dev/api/get_tournaments/{user_id}
+GET method
+------------------------------------------------------------------------------------
+
+Get Organizer List
+https://spiderprojects.in/tournament_dev/api/get_tournaments
+GET method
+
+-------------------------------------------------------------------------------------
+Get Organizer Details BY id
+https://spiderprojects.in/tournament_dev/api/get_tournaments/{user_id}
+GET method
+
+
+
+----------------------------- Notification ------------------------------------------
+Get all notification
+
+https://spiderprojects.in/tournament_dev/api/notification
+get method param
+
+user_id => (int)
+---------------------------------------------------------------------------
+Get notification count 
+
+https://spiderprojects.in/tournament_dev/api/notification_count
+get method params
+
+user_id => (int)
+---------------------------------------------------------------------------
+Update Notifications
+
+https://spiderprojects.in/tournament_dev/api/updateNotifications
+get method params
+
+user_id => (int)
+
+----------------------------- common --------------------------------------
+get about us details
+
+https://spiderprojects.in/tournament_dev/api/about_us
+get method
+---------------------------------------------------------------------------
+Contact Us Form
+
+https://spiderprojects.in/tournament_dev/api/contact_us
+post method
+ name => (string)
+ mobile => (int)
+ email => (string)
+ comment => (string)
+
+----------------------------------------------------------------------------
+Get App Contact Details
+
+https://spiderprojects.in/tournament_dev/api/contact
+Get method
+-----------------------------------------------------------------------------
+Get FAQs
+
+https://spiderprojects.in/tournament_dev/api/faqs
+get method
+
+------------------------------------------------------------------------------
+Get Terms and Conditions
+
+https://spiderprojects.in/tournament_dev/api/terms_conditions
+get method
+-------------------------------------------------------------------------------
+Get Privacy policy
+
+https://spiderprojects.in/tournament_dev/api/privacy_policy
+get method
+
+------------------------------Log out-------------------------------------------
+
+POST Method
+
+https://spiderprojects.in/tournament_dev/api/logout
+form data:
+
+user_id => (int) ex.50
+
+---------------------------------------------------------------------------------
+File path url
+
+image file path
+https://spiderprojects.in/tournament_dev/public/uploads/images/profile/{user_id}/{file_name}
+https://spiderprojects.in/tournament_dev/public/uploads/images/notifications/{file_name}
+
+---------------------------------------------------------------------------------
+
+

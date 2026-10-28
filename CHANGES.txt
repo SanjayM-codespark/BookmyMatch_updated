@@ -1,0 +1,313 @@
+================================================================
+BOOKMYMATCH — CHANGES & NEW FEATURES DOCUMENTATION
+================================================================
+Project   : BookMyMatch
+Stack     : CodeIgniter 4, MySQL, PHP
+Date      : 2026-06-08
+Author    : Development Session (Claude Code)
+================================================================
+
+
+================================================================
+1. DATABASE CHANGES  (run team_feature_setup.sql in phpMyAdmin)
+================================================================
+
+TABLE: sports
+  + sports_max_players  INT DEFAULT 1
+    → Superadmin sets default team size per sport
+      (e.g. Cricket=11, Basketball=5, Badminton=1)
+
+TABLE: listing_events
+  + listing_event_max_players  INT DEFAULT 1
+    → Max players allowed per team for this event
+  + listing_event_max_teams    INT DEFAULT 0
+    → Max number of teams allowed (0 = unlimited)
+
+TABLE: teams  (existing table extended)
+  + team_leader_id         INT NULL
+    → user_id of the user who created the team
+  + team_join_token        VARCHAR(64) UNIQUE
+    → Unique 32-char token for shareable invite link
+  + team_max_players       INT DEFAULT 1
+    → Copied from listing_event_max_players at create time
+  + team_status            ENUM('open','full','locked') DEFAULT 'open'
+    → open   = accepting members
+    → full   = all slots filled, ready for match
+    → locked = paired into a match, no more changes
+  + team_listing_event_id  INT NULL
+    → Links team to a specific listing_events row
+
+TABLE: team_members  (NEW TABLE)
+  tm_id         INT AUTO_INCREMENT PRIMARY KEY
+  tm_team_id    INT           → which team
+  tm_user_id    INT NULL      → NULL if member has no account
+  tm_name       VARCHAR(100)  → member name
+  tm_mobile     VARCHAR(20)   → mobile number
+  tm_email      VARCHAR(100)  → email (optional)
+  tm_status     ENUM('pending','accepted','rejected')
+  tm_added_by   ENUM('leader','self','request')
+  tm_created_at DATETIME
+
+
+================================================================
+2. NEW API ENDPOINTS  (app/API/r1/Team.php)
+================================================================
+
+All endpoints require header:
+  X-API-KEY: twentytwo22bookmymatchtwentytwo22
+
+Base URL: http://localhost/bookmymatch/public/api
+
+
+--- 2.1  GET   api/event_teams/{listing_event_id} ---
+Purpose : Get all teams registered for a specific event
+Params  : listing_event_id in URL
+Response: event_type, max_players, max_teams, deadline,
+          teams array with members + slots_left per team
+Use     : Show team list screen when user opens a team-type event
+
+
+--- 2.2  POST  api/create_team ---
+Purpose : Registered user creates a new team for an event
+Body    : user_id, listing_event_id, team_name
+Response: team_id, invite_link, token
+Notes   :
+  - Only works for events where listing_event_type = 'team'
+  - Checks registration deadline (listing_event_lastbook_date)
+  - Checks max_teams limit
+  - Auto-adds creator as first member (leader)
+  - Triggers auto-match check
+Use     : "Create Your Team" button on the event screen
+
+
+--- 2.3  GET   api/team_by_token/{token} ---
+Purpose : Load team info from an invite link token
+Params  : token in URL (32-char hex from create_team)
+Response: team details, members, slots_left, event info, deadline
+Use     : Landing page when someone clicks a shared invite link
+          Shows team name, who is in it, and slots remaining
+
+
+--- 2.4  GET   api/team_details/{team_id} ---
+Purpose : Full team details with all members and their statuses
+Params  : team_id in URL
+Response: team + members array (pending/accepted/rejected)
+          + invite_link + event info
+Use     : Team leader's management screen
+
+
+--- 2.5  POST  api/join_team ---
+Purpose : Join a team via invite link — NO account required
+Body    : token, name, mobile, email (optional), user_id (optional)
+Notes   :
+  - token = the 32-char token from the invite link
+  - Checks if team is full or locked
+  - Checks registration deadline
+  - Prevents duplicate join (same mobile or user_id)
+  - If account exists, pass user_id; otherwise leave blank
+  - Triggers auto-match check after joining
+Use     : "Join Team" form shown after opening an invite link
+
+
+--- 2.6  POST  api/add_team_member ---
+Purpose : Team leader manually adds a player by typing their details
+Body    : leader_id, team_id, name, mobile, email (opt), user_id (opt)
+Notes   :
+  - Only the team leader (leader_id matches team_leader_id) can call this
+  - Skips approval — member is directly accepted
+  - Checks team capacity
+  - Triggers auto-match check
+Use     : Leader adds offline players who don't have the app
+
+
+--- 2.7  POST  api/request_join_team ---
+Purpose : Registered user sends a join request (requires leader approval)
+Body    : user_id, team_id
+Notes   :
+  - Creates a team_members row with status = 'pending'
+  - Leader must call approve_team_member to accept or reject
+Use     : "Request to Join" button for teams the user finds via search
+
+
+--- 2.8  POST  api/approve_team_member ---
+Purpose : Leader approves or rejects a pending join request
+Body    : leader_id, team_id, tm_id, action (accept OR reject)
+Notes   :
+  - action must be exactly "accept" or "reject"
+  - On accept: checks capacity, then marks member as 'accepted'
+  - On reject: marks member as 'rejected'
+  - Accept triggers auto-match check
+Use     : Leader's pending requests screen — approve/reject buttons
+
+
+--- 2.9  GET   api/pending_requests/{team_id}/{leader_id} ---
+Purpose : Leader views all pending join requests for their team
+Params  : team_id and leader_id in URL
+Response: list of pending team_members
+Use     : Notification badge / requests tab in team management screen
+
+
+================================================================
+3. AUTO-MATCH CREATION LOGIC  (inside Team.php)
+================================================================
+
+Triggered automatically after every member addition that
+could make a team full (called from endpoints 2.2, 2.5, 2.6, 2.8).
+
+Algorithm:
+  1. Count accepted members for the team
+  2. If count >= team_max_players → mark team_status = 'full'
+  3. Get all non-locked teams for the same listing_event_id
+     ordered by creation time (oldest first)
+  4. While there are at least 2 full teams:
+       - Pair: first-created-full  vs  last-created-full
+       - Insert a row into 'matches' table for this pair
+       - Mark both teams as 'locked'
+       - Repeat until no more pairs
+
+This means T1 vs T4, T2 vs T3 etc. are auto-generated
+the moment the last required team fills up.
+
+
+================================================================
+4. ROUTES ADDED  (app/Config/Routes.php)
+================================================================
+
+Inside the 'api' route group (all protected by BasicAuthFilter):
+
+  GET   event_teams/(:num)             → Team::event_teams/$1
+  POST  create_team                    → Team::create_team
+  GET   team_by_token/(:any)           → Team::team_by_token/$1
+  GET   team_details/(:num)            → Team::team_details/$1
+  POST  join_team                      → Team::join_team
+  POST  add_team_member                → Team::add_team_member
+  POST  request_join_team              → Team::request_join_team
+  POST  approve_team_member            → Team::approve_team_member
+  GET   pending_requests/(:num)/(:num) → Team::pending_requests/$1/$2
+
+
+================================================================
+5. ADMIN PANEL CHANGES  (Superadmin)
+================================================================
+
+FILE: app/Views/master_entries/sports.php
+  - Form: Added "Max Players Per Team" number input
+    (superadmin sets default team size when adding/editing a sport)
+  - Table: Added "Max Players" column to the sports list
+
+FILE: app/Controllers/Admin.php  →  attempt_add_sports()
+  - Now reads and saves sports_max_players on add and update
+
+
+================================================================
+6. ORGANIZER PANEL CHANGES
+================================================================
+
+FILE: app/Views/organizer/create_tournament.php
+  - Events section: Added "Max Players Per Team" and "Max Teams"
+    fields per event row
+  - Fields are hidden by default, auto-shown when Event Type = Team
+  - Cloned event rows (+ button) also reset team fields correctly
+
+FILE: app/Views/organizer/edit_event.php  (Add New Event form)
+  - Same max_players[] and max_teams[] fields added
+  - Uses array notation to support multiple event rows
+  - JS handles show/hide per row independently
+
+FILE: app/Views/organizer/edit_tourney_event.php  (Edit Event form)
+  - Same fields added, pre-filled with saved values
+  - Auto-visible when editing an already team-type event
+
+FILE: app/Views/organizer/view_events.php  (Events List)
+  - New "Teams" column added between Fee and Tournament
+  - Team events show: blue badge + max teams + players/team
+  - Individual/Doubles events show: —
+
+FILE: app/Views/organizer/team_list.php  (Teams List)
+  - Added "Status" column with color badges:
+      open   → green
+      full   → yellow/orange
+      locked → red
+  - Added "Members" column: shows current / max (e.g. 7 / 11)
+  - Added "Invite Link" column with Copy Link button
+    (copies full join URL to clipboard)
+  - Removed Group Name column (not relevant for API-based teams)
+
+FILE: app/Controllers/Organizer.php
+  → attempt_create_tournament()
+    - Reads max_players[] and max_teams[] arrays
+    - Saves listing_event_max_players and listing_event_max_teams
+      for each team-type event on tournament creation
+
+  → attempt_add_tourney_event()
+    - Same: saves max_players and max_teams per event
+
+  → attempt_edit_tourney_event()
+    - Same: updates max_players and max_teams when editing event
+
+
+================================================================
+7. POSTMAN COLLECTION
+================================================================
+
+File    : BookMyMatch_API.postman_collection.json  (project root)
+Folders : 10
+Requests: 99 total
+
+Folder breakdown:
+  Account-Auth      14 requests
+  Location           4 requests
+  Sports             2 requests
+  Tournaments        8 requests
+  Booking/Payments   6 requests
+  Notifications      3 requests
+  System-Content    12 requests
+  Posts-Social      17 requests
+  Umpire            24 requests
+  Teams              9 requests  ← NEW
+
+Collection-level auth:
+  Header: X-API-KEY = twentytwo22bookmymatchtwentytwo22
+
+Base URL variable:
+  base_url = http://localhost/bookmymatch/public/api
+
+To use: Delete old imported collection in Postman, then
+        File → Import → select BookMyMatch_API.postman_collection.json
+
+
+================================================================
+8. HOW THE TEAM FLOW WORKS END-TO-END
+================================================================
+
+ORGANIZER (web panel):
+  1. Creates tournament
+  2. Adds events — if Event Type = Team, fills Max Players + Max Teams
+  3. Views team_list page to monitor team statuses and copy invite links
+
+USER (mobile app via API):
+  1. Opens event → sees listing_event_type = 'team'
+  2. Calls GET event_teams/{id} to see existing teams
+  3. Either:
+     a. Creates own team  → POST create_team
+        → Gets invite link → shares with teammates on WhatsApp etc.
+     b. Gets invite link from friend → opens it
+        → Calls GET team_by_token/{token} to see team info
+        → Calls POST join_team to join (no account needed)
+     c. Found a team via search → POST request_join_team
+        → Leader gets notified → calls approve_team_member
+
+LEADER:
+  - Manually adds offline players via POST add_team_member
+  - Views pending requests via GET pending_requests/{team_id}/{leader_id}
+  - Approves/rejects via POST approve_team_member
+
+AUTO-MATCH:
+  - The moment the LAST required team fills up
+  - First-created full team vs Last-created full team are paired
+  - Match inserted into 'matches' table automatically
+  - Both teams locked — no more member changes
+
+================================================================
+END OF CHANGES DOCUMENTATION
+================================================================

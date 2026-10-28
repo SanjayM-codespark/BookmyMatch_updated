@@ -1,0 +1,1071 @@
+
+    @font-face {
+        font-family: 'my-font';
+        src: url(assets/font/Source_Sans_Pro/SourceSansPro-Regular.ttf);
+    }
+
+
+    /* payment */
+    th.tablehead {
+        font-size: 16px;
+        line-height: 20px;
+        color: #212121;
+        font-weight: 400;
+    }
+.tablehead1 {
+        font-size: 16px;
+line-height: 20px;
+
+color: #9E9E9E;
+
+        font-weight: 400;
+    }
+/* navigation */
+
+.ipadview {
+    display: none;
+}
+
+.sizeadjust{
+    width: 200px;
+}
+    .sportsimage {
+        max-width: 19.666667%;
+    }
+
+    body {
+        font-family: 'my-font';
+    }
+
+    hr {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        border: 0;
+        border-top: 1px solid rgb(251 247 247);
+        width: 177px;
+    }
+    .hotelicon{
+        background: #e71a2d;
+                            color: white;
+                            padding: 12px;
+                            border-radius: 50%;
+    }
+
+    .turnamentcards {
+        background: #EAEFFD;
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        transition-property: #E71A2D;
+        color: gray !important;
+    }
+
+    .turnamentcards:hover {
+        background: #E71A2D;
+        color: white !important;
+        transition: 0.6s;
+    }
+    .addresstext{
+        font-size: 16px;
+                            color: #212121;
+                            margin: auto;
+    }
+    .hoteladd{
+        font-size: 16px;
+                                    line-height: 19px;
+                                    
+                                    display: list-item;
+    list-style: none;
+    }
+    .hoteltime{
+        font-size: 16px;
+                                    line-height: 19px;
+    }
+    .hotelno{
+        font-size: 16px;
+                                    line-height: 19px;
+    }
+    .cardscolumns{
+    padding-right: 0;
+    }
+    .hotelname{
+        font-weight: 600;
+                                font-size: 24px;
+    }
+    .rollimage{
+        border-radius: 13px;
+        width: 100%;
+        height: 160px;
+                    object-fit: cover;
+    }
+/* login */
+.loginbutton{
+    width: 120px;
+    background: #E71A2D;
+    font-weight: 600;
+    border: 0;
+    height: 49px;
+    font-size: 19px;
+}
+.loginbutton1{
+    width: 120px;
+    background: transparent;
+    font-weight: 600;
+    border: 1px solid #E71A2D;
+    height: 49px;
+    font-size: 19px;
+    color: #E71A2D;
+
+}
+.mailicon{
+    position: absolute;
+    right: 27px;
+    top: 19px;
+    color: #afaeae;
+}
+.inputgroups{
+    height: 54px;
+    background: transparent;
+    border: 1px solid #b1acac;
+}
+/* register */
+
+.nav-tabs .nav-link{
+    color: black;
+    font-weight: 600;
+    font-size: 18px;
+}
+.nav-tabs .nav-link.active {
+    color: #e71a2d;
+    background-color: transparent;
+    border-color: transparent;
+    font-size: 17px;
+    font-weight: 600;
+    border-bottom: 2px solid #e71a2d;
+}
+
+/* cricketacademy */
+
+.bookingcard{
+    background: black;
+                border: 4px solid #FFFFFF;
+                box-sizing: border-box;
+                border-radius: 8px; color: white; width: 100%;
+height: auto;
+}
+.bookingh2{
+    font-size: 24px; font-weight: 600;
+}
+.bookingh3{
+    font-weight: normal;
+                    font-size: 40px;
+}
+.bookingh4{
+    font-weight: normal;
+                    font-size: 16px;
+}
+.bookingh5{
+    background: black;
+                        border: 1px solid #EE4A54;
+                        box-sizing: border-box;
+                        border-radius: 4px;width: 120px;
+height: 36px;margin: auto;font-weight: normal;
+font-size: 14px;
+line-height: 18px;
+
+
+
+color: #E71A2D;padding: 8px;
+}
+.bookingh5:hover{
+    background: #E71A2D;
+                        border: 1px solid #E71A2D;
+                        box-sizing: border-box;
+                        border-radius: 4px;width: 120px;
+height: 36px;margin: auto;font-weight: normal;
+font-size: 14px;
+line-height: 18px;
+
+
+
+color: #ffff;padding: 8px;
+}
+.ruleslist{
+    font-size: 16px;
+line-height: 20px;
+
+color: #9E9E9E;
+}
+
+/* selection page */
+
+.formicons{
+    background: #e71a2d;
+                                            color: white;
+                                            border-radius: 50px;
+                                            padding: 3px 7px;
+                                            border: 0;
+}
+a{
+    text-decoration: none !important;
+}
+.makepaymentbutton{
+    color: white;
+    font-size: 16px;
+    
+    background-color: #e71a2d;
+   
+
+}
+.makepaymentbutton1{
+    color: white;
+    font-size: 16px;
+    padding: 11px;
+    background-color: #e71a2d;
+    border-radius: 4px;
+    
+
+}
+/* profile */
+.profilelabel{
+    font-weight: 400;
+                                    font-size: 16px;
+                                    line-height: 20px;
+                                    
+                                    color: #424242;
+}
+
+/* payment */
+input[type=checkbox], input[type=radio] {
+    box-sizing: border-box;
+    padding: 0;
+    width: 24px;
+    height: 21px;
+  }
+  /* paymenthistory */
+
+  .turnamentcards1{
+    background: #EAEFFD;
+    
+    border-radius: 8px;
+    transition-property: #E71A2D;
+    color: gray !important;
+  }
+  .cardscolumns1 {
+    padding-left: 69px;
+    padding-right: 0;
+}
+
+
+
+
+  
+  
+  
+  .dropdown dd,
+  .dropdown dt {
+    margin: 0px;
+    padding: 0px;
+  }
+  
+  .dropdown ul {
+    margin: -1px 0 0 0;
+  }
+  
+  .dropdown dd {
+    position: relative;
+  }
+  
+  
+  
+ 
+  
+  .dropdown dt a span,
+  .multiSel span {
+    cursor: pointer;
+    display: inline-block;
+    padding: 0 3px 2px 0;
+  }
+  
+  .dropdown dd ul {
+    background-color:#eaeffd;
+    border: 0;
+    color: #000;
+    display: none;
+    left: 0px;
+    padding: 2px 15px 2px 5px;
+    position: absolute;
+    top: 11px;
+    width: 150px;
+    list-style: none;
+   
+  }
+  
+  .dropdown span.value {
+    display: none;
+  }
+  
+  .dropdown dd ul li a {
+    padding: 6px;
+    display: block;
+    color: black;
+  }
+  .mytoggledrop {
+    display: none;
+}
+.formhide{
+    display: none;
+}
+  
+  a{
+      text-decoration: none;
+  }
+  a{
+    color: #212121;
+    margin-top: 10px;
+}
+  
+  
+  button {
+    background-color: #6BBE92;
+    /* width: 302px; */
+    border: 0;
+    padding: 10px 0;
+    margin: 5px 0;
+    text-align: center;
+    color: #fff;
+    font-weight: bold;
+  }
+
+  .logoinmobile {
+    display: none;
+}
+.logincolums {
+    background: #000;
+    min-height: 100vh;
+ padding-top: 13%;
+ 
+}
+
+img.tuorcards {
+    width: 100%;
+    border-radius: 10px;
+    height: 163px;
+    
+}
+.pricecardsection{
+    background: #000; padding: 50px;  
+}
+.truncate {
+    white-space: nowrap;
+    width: 105px;
+    overflow: hidden;
+  }
+/* orgnizer */
+.hotelname1{
+    font-size: 16px;
+line-height: 20px;
+
+color: #212121;
+}
+.hoteltime1{
+    font-size: 16px;
+line-height: 20px;
+
+color: #9E9E9E;
+}
+.makepaymentbutton2 {
+    color: white;
+    font-size: 16px;
+    padding: 5px;
+    background-color: #e71a2d;
+    border-radius: 4px;
+}
+  /* .acadamysection
+  {
+    background:linear-gradient(2deg, #f0a12ec9, #f0a12e1c), url("/assets/img/tournament\ pic.png"); background-repeat: no-repeat;background-size: cover;background-position:center; object-fit: cover;
+
+  } */
+  .selectioncard{
+    background: #EAEFFD;
+    border-radius: 8px;
+    width: 100%;
+  } 
+  .selectionrow {
+    justify-content: center;
+}
+.pricecardsection{
+
+    
+    background-color: black;
+    min-height: 80vh;
+}
+
+.logincolumn2 {
+    background: #EAEFFD;
+    min-height: 110vh;
+}
+.row.footrow {
+    float: right;
+}
+span.live {
+    border-radius: 4px;
+    /* background: yellow; */
+    padding: 0px 10px;
+    font-size: 14px;
+    color: #212529;
+    background-color: #ffc107;
+    font-weight: 600;
+}
+span.game {
+    color: #fff;
+    background-color: #007bff;
+    border-radius: 4px;
+    padding: 0px 10px;
+    font-size: 14px;
+    font-weight: 600;
+}
+@media screen and (max-width: 414px){
+    .acadamysection
+    {
+      background:linear-gradient(2deg, #f0a12ec9, #f0a12e1c), url("/assets/img/tournament\ pic.png"); min-height: 10vh; background-repeat: no-repeat;background-size: cover;background-position:center; object-fit: cover;
+  
+    }
+    .formhide{
+        display: block !important ;
+    }
+    .mytoggledrop {
+        margin: 0 !important;
+    }
+    .mytoggledrop {
+        display: block !important;
+    }
+    .searchbuttons {
+        display: block !important;
+    }
+    .sizeadjust {
+        width: 230px !important;
+    }
+    .ipadview {
+        display: none !important;
+    }
+    .cardscolumns {
+        padding-left: 17px;
+        padding-right: 0;
+      }
+    .rooles{
+        display: flex;
+    height: 180px;
+    overflow-x: scroll;
+    width: 393px;
+    }
+    .logoinmobile {
+        display: block !important ;
+    }
+    .ipaddnone {
+        display: block !important;
+    }
+    .row.footrow {
+        float: left;
+    }
+    .logincolums {
+        background: #000;
+        min-height: 100vh;
+     padding-top: 13%;
+     display: none;
+    }
+    .rollimage {
+        border-radius: 13px;
+        width: 247px !important;
+        height: 240px;
+        object-fit: cover;
+    }
+    .viewchange {
+        color: white;
+    }    
+    .nav-tabs .nav-link{
+        color: white;
+        font-weight: 600;
+        font-size: 18px;
+    }
+    
+    .selectioncard{
+        background: #EAEFFD;
+        border-radius: 8px;
+        width: 100% !important;
+      } 
+      .logincolumn2 {
+        background: #000;
+        min-height: 110vh;
+    }
+    
+.sportsimage {
+    max-width: 100%;
+    text-align: center;
+    margin: 10px;
+}
+img.tuorcards {
+    width: 100%;
+    border-radius: 10px;
+    height: auto;
+    
+}
+.turnamentcards {
+    background: #EAEFFD;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    transition-property: #E71A2D;
+    color: gray !important;
+    margin-bottom: 10px !important;
+}
+.turnamentcards1 {
+    background: #EAEFFD;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    transition-property: #E71A2D;
+    color: gray !important;
+    margin-bottom: 10px !important;
+}
+.bookingcard {
+    background: black;
+    border: 4px solid #FFFFFF;
+    box-sizing: border-box;
+    border-radius: 8px;
+    color: white;
+    width: auto;
+    height: auto;
+    
+}
+.pricecardsection{ 
+
+    padding: 20px;
+}
+.pricemenu{
+    padding: 30px 0;
+    max-width: 101% !important;
+    flex: 0 0 100% !important;
+
+}
+.navauto{
+    margin: auto;
+padding: 10px;
+justify-content: center;
+}
+.turnamentcards1{
+    background: #EAEFFD;
+    width: auto;
+    height: auto;
+    border-radius: 8px;
+    transition-property: #E71A2D;
+    color: gray !important;
+    margin-bottom: 10px !important;
+  }
+  .cardscolumns1 {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+@media screen and (max-width: 768px){
+
+    .logoinmobile {
+        display: block !important;
+    }
+    .mytoggledrop {
+        margin: auto;
+    }
+    .mytoggledrop {
+        display: block;
+    }
+    .loginhide {
+        display: none;
+    }
+    .hidetoggle {
+        display: none;
+    }
+    .searchbuttons{
+        display: none;
+    }
+    .ipadrow {
+        display: block;
+    }
+    .ipadview {
+        display: contents;
+    }
+    .sizeadjust{
+        width: 130px !important;
+    }
+    .ipaddnone{
+        display: none;
+    }
+    .logincolums {
+        background: #000;
+        min-height: 100vh;
+     padding-top: 13%;
+     
+    }
+    .rollimage {
+        border-radius: 13px;
+        
+        height: 240px;
+        object-fit: cover;
+        width: 216px !important;
+    }
+    .cardscolumns {
+        padding-left: 17px;
+        padding-right: 0;
+        margin-top: 13px;
+      }
+    .row.rooles {
+        height: 177px;
+        overflow: scroll;
+    }
+.sportsimage {
+    max-width: 100%;
+    text-align: center;
+    margin: 10px;
+}
+img.tuorcards {
+
+    border-radius: 10px;
+    
+    width: 284px;
+}
+.turnamentcards {
+    background: #EAEFFD;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    transition-property: #E71A2D;
+    color: gray !important;
+    margin-bottom: 10px !important;
+}
+.bookingcard {
+    background: black;
+    border: 4px solid #FFFFFF;
+    box-sizing: border-box;
+    border-radius: 8px;
+    color: white;
+    
+
+    
+}
+
+.pricecardsection{
+
+    padding: 20px;
+    background-color: black;
+    min-height: 42vh;
+}
+.pricemenu{
+    padding: 36px 7px;
+}
+.navauto{
+    margin: auto;
+padding: 10px;
+justify-content: center;
+}
+.turnamentcards1{
+    background: #EAEFFD;
+    width: auto;
+    height: auto;
+    border-radius: 8px;
+    transition-property: #E71A2D;
+    color: gray !important;
+    margin-bottom: 10px !important;
+  }
+  .cardscolumns1 {
+    padding-left: 19px;
+    padding-right: 0;
+  }
+  .sportsimage {
+    max-width:60%;
+  } 
+  .acadamysection
+  {
+    background:linear-gradient(2deg, #f0a12ec9, #f0a12e1c), url("/assets/img/tournament\ pic.png"); min-height: 20vh; background-repeat: no-repeat;background-size: cover;background-position:center; object-fit: cover;
+
+  }
+  .selectioncard{
+    background: #EAEFFD;
+    border-radius: 8px;
+    width: 153%;
+  }
+  .col-md-3.pricemenu{
+    -ms-flex: 0 0 25%;
+    flex: 0 0 25%;
+    max-width: 47%;
+}
+.logincolums {
+    background: #000;
+    min-height: 100vh;
+    padding-top: 13%;
+    display: none;
+}
+
+.col-md-6.logincolumn2 {
+    -ms-flex: 0 0 100% !important;
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+     padding: 58px;
+}
+.viewchange {
+    color: white;
+}    
+.nav-tabs .nav-link{
+    color: white;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+
+  .logincolumn2 {
+    background: #000;
+    min-height: 45vh;
+}
+.col-md-6.paymentcard {
+    -ms-flex: 0 0 50%;
+    flex: 0 0 100%;
+    max-width: 109%;
+}
+}
+@media screen and (max-width: 810px){
+
+    .logoinmobile {
+        display: block !important;
+    }
+    .mytoggledrop {
+        margin: auto;
+    }
+    .mytoggledrop {
+        display: block;
+    }
+    .loginhide {
+        display: none;
+    }
+    .hidetoggle {
+        display: none;
+    }
+    .searchbuttons{
+        display: none;
+    }
+    .ipadrow {
+        display: block;
+    }
+    .ipadview {
+        display: contents;
+    }
+    .sizeadjust{
+        width: 130px !important;
+    }
+    .ipaddnone{
+        display: none;
+    }
+    .logincolums {
+        background: #000;
+        min-height: 100vh;
+     padding-top: 13%;
+     
+    }
+    .rollimage {
+        border-radius: 13px;
+        
+        height: 240px;
+        object-fit: cover;
+        width: 216px !important;
+    }
+    .cardscolumns {
+        padding-left: 17px;
+        padding-right: 0;
+        margin-top: 13px;
+      }
+    .row.rooles {
+        height: 177px;
+        overflow: scroll;
+    }
+.sportsimage {
+    max-width: 100%;
+    text-align: center;
+    margin: 10px;
+}
+img.tuorcards {
+
+    border-radius: 10px;
+    
+    width: 284px;
+}
+.turnamentcards {
+    background: #EAEFFD;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    transition-property: #E71A2D;
+    color: gray !important;
+    margin-bottom: 10px !important;
+}
+.bookingcard {
+    background: black;
+    border: 4px solid #FFFFFF;
+    box-sizing: border-box;
+    border-radius: 8px;
+    color: white;
+    
+
+    
+}
+
+.pricecardsection{
+
+    padding: 20px;
+    background-color: black;
+    min-height: 42vh;
+}
+.pricemenu{
+    padding: 36px 7px;
+}
+.navauto{
+    margin: auto;
+padding: 10px;
+justify-content: center;
+}
+.turnamentcards1{
+    background: #EAEFFD;
+    width: auto;
+    height: auto;
+    border-radius: 8px;
+    transition-property: #E71A2D;
+    color: gray !important;
+    margin-bottom: 10px !important;
+  }
+  .cardscolumns1 {
+    padding-left: 19px;
+    padding-right: 0;
+  }
+  .sportsimage {
+    max-width:60%;
+  } 
+  .acadamysection
+  {
+    background:linear-gradient(2deg, #f0a12ec9, #f0a12e1c), url("/assets/img/tournament\ pic.png"); min-height: 20vh; background-repeat: no-repeat;background-size: cover;background-position:center; object-fit: cover;
+
+  }
+  .selectioncard{
+    background: #EAEFFD;
+    border-radius: 8px;
+    width: 153%;
+  }
+  .col-md-3.pricemenu{
+    -ms-flex: 0 0 25%;
+    flex: 0 0 25%;
+    max-width: 47%;
+}
+.logincolums {
+    background: #000;
+    min-height: 100vh;
+    padding-top: 13%;
+    display: none;
+}
+
+.col-md-6.logincolumn2 {
+    -ms-flex: 0 0 100% !important;
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+     padding: 58px;
+}
+.viewchange {
+    color: white;
+}    
+.nav-tabs .nav-link{
+    color: white;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+
+  .logincolumn2 {
+    background: #000;
+    min-height: 45vh;
+}
+.col-md-6.paymentcard {
+    -ms-flex: 0 0 50%;
+    flex: 0 0 100%;
+    max-width: 109%;
+}
+}
+
+@media screen and (max-width: 1024px){
+    .logoinmobile {
+        display: block !important;
+    }
+    .mytoggledrop {
+        margin: auto;
+    }
+    .mytoggledrop {
+        display: block;
+    }
+    .loginhide {
+        display: none;
+    }
+    .hidetoggle {
+        display: none;
+    }
+    .searchbuttons{
+        display: none;
+    }
+    .ipadrow {
+        display: block;
+    }
+    .ipadview {
+        display: contents;
+    }
+    .sizeadjust{
+        width: 130px !important;
+    }
+    .ipaddnone{
+        display: none;
+    }
+    .logoinmobile {
+        display: block !important;
+    }
+    .logincolums {
+        background: #000;
+        min-height: 100vh;
+     padding-top: 13%;
+     
+    }
+    .mytoggledrop {
+        display: block;
+    }
+    
+    .loginhide {
+        display: none;
+    }
+    .ipadrow {
+        display: block;
+    }
+    .rollimage {
+        border-radius: 13px;
+        height: 139px;
+        object-fit: cover;
+        width: 233px ;
+        margin: auto;
+    }
+    .cardscolumns {
+        padding-left: 0px;
+        padding-right: 0;
+      }
+.sportsimage {
+    max-width: 100%;
+    text-align: center;
+    margin: 10px;
+}
+img.tuorcards {
+
+    border-radius: 10px;
+    
+
+    
+}
+.row.rooles {
+    height: 177px;
+    overflow: scroll;
+    justify-content: center;
+}
+.turnamentcards {
+    background: #EAEFFD;
+    
+    height: auto;
+    border-radius: 8px;
+    transition-property: #E71A2D;
+    color: gray !important;
+    margin-bottom: 10px !important;
+}
+.bookingcard {
+    background: black;
+    border: 4px solid #FFFFFF;
+    box-sizing: border-box;
+    border-radius: 8px;
+    color: white;
+    
+
+    
+}
+.pricecardsection{
+
+    padding: 20px;
+    background-color: black;
+    min-height: 42vh;
+}
+.pricemenu{
+    padding: 36px 7px;
+}
+.navauto{
+    margin: auto;
+padding: 10px;
+justify-content: center;
+}
+.turnamentcards1{
+    background: #EAEFFD;
+    width: auto;
+    height: auto;
+    border-radius: 8px;
+    transition-property: #E71A2D;
+    color: gray !important;
+    margin-bottom: 10px !important;
+  }
+  .cardscolumns1 {
+    padding-left: 19px;
+    padding-right: 0;
+  }
+  .sportsimage {
+    max-width:60%;
+  } 
+  .acadamysection
+  {
+    background:linear-gradient(2deg, #f0a12ec9, #f0a12e1c), url("/assets/img/tournament\ pic.png"); 
+
+  }
+  .selectioncard{
+    background: #EAEFFD;
+    border-radius: 8px;
+    width: 100%;
+  }
+  .col-md-3.pricemenu{
+    -ms-flex: 0 0 25%;
+    flex: 0 0 50%;
+    max-width: 47%;
+}
+.logincolums {
+    background: #000;
+    min-height: 100vh;
+    padding-top: 13%;
+    display: none;
+}
+
+.col-md-6.logincolumn2 {
+    -ms-flex: 0 0 100% !important;
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+     padding: 58px;
+}
+.viewchange {
+    color: white;
+}    
+.nav-tabs .nav-link{
+    color: white;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+
+  .logincolumn2 {
+    background: #000;
+    min-height: 45vh;
+}
+.col-md-6.paymentcard {
+    -ms-flex: 0 0 50%;
+    flex: 0 0 100%;
+    max-width: 109%;
+}
+}

@@ -1,0 +1,2072 @@
+
+    @font-face {
+        font-family: 'my-font';
+        src: url(assets/font/Source_Sans_Pro/SourceSansPro-Regular.ttf);
+    }
+
+
+    /* payment */
+    th.tablehead {
+        font-size: 14px;
+    line-height: 20px;
+    color: #212121;
+    font-weight: 600;
+    }
+.tablehead1 {
+        font-size: 14px;
+line-height: 20px;
+
+color: 
+#424242;
+
+        font-weight: 400;
+    }
+/* navigation */
+
+.ipadview {
+    display: none;
+}
+
+.sizeadjust{
+    width: 200px;
+}
+    .sportsimage {
+        max-width: 19.666667%;
+    }
+
+    body {
+        /*font-family: 'my-font';*/
+		font-family: 'Source Sans 3', sans-serif;
+    }
+
+    hr {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        border: 0;
+        border-top: 1px solid rgb(251 247 247);
+        width: 177px;
+    }
+    .hotelicon{
+        background: #e71a2d;
+		color: white;
+		padding: 12px;
+		border-radius: 50%;
+		height:40px;
+    }
+
+    .turnamentcards {
+        background:#202739;
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        transition-property: #E71A2D;
+        color: gray !important;
+		margin-bottom: 22px !important;
+    }
+
+    .turnamentcards:hover {
+        background: #e71a2d;
+        color: white !important;
+        transition: 0.6s;
+    }
+	.turnamentcards:hover span
+	{
+		color:#fff;
+	}
+	.turnamentcards:hover i
+	{
+		color:#fff;
+	}
+    .addresstext{
+      font-size: 16px;
+    color: #fff;
+    margin: auto;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    }
+	.makepaymentbutton1
+	{
+		border:none;
+		padding: 10px 25px;
+    margin-top: 12px;
+	}
+    .hoteladd{
+        font-size: 16px;
+        line-height: 19px;
+       display: list-item;
+    list-style: none;
+	color:#9E9E9E;
+    }
+    .hoteltime{
+        font-size: 16px;
+        line-height: 19px;
+		color:#9E9E9E;
+    }
+    .hotelno{
+        font-size: 16px;
+        line-height: 19px;
+    }
+    .cardscolumns{
+    padding-right: 0;
+    }
+    .hotelname{
+        font-weight: 400;
+       font-size: 16px;
+	   color:#fff;
+    }
+    .rollimage{
+        border-radius: 13px;
+        width: 100%;
+        height: 160px;
+                    object-fit: cover;
+    }
+	.list-section1 i
+	{
+		font-size: 18px;
+		padding-right: 5px;
+		color: #9E9E9E;
+		}
+/* login */
+.loginbutton{
+    width: 120px;
+    background: #E71A2D;
+    font-weight: 600;
+    border: 0;
+    height: 49px;
+    font-size: 19px;
+	margin-top:15px;
+}
+.loginbutton1{
+    width: 120px;
+    background: transparent;
+    font-weight: 600;
+    border: 1px solid #E71A2D;
+    height: 49px;
+    font-size: 19px;
+    color: #E71A2D;
+
+}
+.mailicon{
+    position: absolute;
+    right: 27px;
+    top: 19px;
+    color: #afaeae;
+}
+.inputgroups{
+	height: 50px;
+	background:transparent;
+    border:1px solid #727272;
+}
+/* register */
+
+.nav-tabs .nav-link{
+    color: black;
+    font-weight: 600;
+    font-size: 18px;
+}
+.nav-tabs .nav-link.active {
+    color: #e71a2d;
+    background-color: transparent;
+    border-color: transparent;
+    font-size: 17px;
+    font-weight: 600;
+    border-bottom: 2px solid #e71a2d;
+}
+
+/* cricketacademy */
+
+.bookingcard{
+    background: #202739;
+	border: 2px solid #FFFFFF;
+	box-sizing: border-box;
+	border-radius: 8px; 
+	color: white; 
+	width: 100%;
+    height: auto;
+	margin-bottom:25px;
+}
+.bookingh2{
+    font-size: 18px; 
+	font-weight: 600;
+}
+.bookingh3{
+    font-weight: 400;
+    font-size: 26px;
+	margin-top:15px;
+}
+.bookingh3 img{
+	width:26px;
+}
+.bookingh4{
+    font-weight: normal;
+    font-size: 15px;
+}
+.bookingh5{
+   text-align: center;
+    background: #202739;
+    border: 1px solid #EE4A54;
+    box-sizing: border-box;
+    border-radius: 4px;
+    width: 100%;
+    height: 43px;
+    margin: auto;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+    color: #E71A2D;
+    padding: 12px;
+	margin-top:15px;
+}
+.bookingh5:hover{
+    background: #E71A2D;
+	border: 1px solid #E71A2D;
+	box-sizing: border-box;
+	border-radius: 4px;width: 100%;
+height: 43px;margin: auto;font-weight: 600;
+font-size: 14px;
+line-height: 18px;
+margin-top:15px;
+color: #ffff;padding: 12px;
+}
+.bookingcard:hover{
+	border: 4px solid #E71A2D;
+}
+.bookingcard:hover .bookingh5{
+	background: #E71A2D;
+	border: 1px solid #E71A2D;
+	box-sizing: border-box;
+	border-radius: 4px;width: 100%;
+height: 43px;margin: auto;font-weight: 600;
+font-size: 14px;
+line-height: 18px;
+margin-top:15px;
+color: #ffff;padding: 12px;
+}
+.booking-sec1
+{
+	border-bottom: 1px solid #9E9E9E;
+    padding-bottom: 25px;
+}
+.rules-back1
+{
+	background:#202739;
+}
+.rule-head1{
+	font-weight: 600;font-size: 24px;
+	
+	color:#fff;
+	margin-bottom:30px;
+}
+.rule-sec2 ul
+{
+	padding-left:0px;
+}
+.desc-left p
+{
+	font-weight: 600;
+    font-size: 18px;
+    color: #B4B4B4;
+	text-align:justify;
+}
+.bor-right1
+{
+	border-right:1px solid #9E9E9E;
+	padding-right:40px !important;
+}
+.rule-sec2
+{
+	padding-left:50px;
+	
+}
+.ruleslist{
+    font-size: 16px;
+line-height: 20px;
+list-style:none;
+color: #B4B4B4;
+font-weight: 600;
+    margin-bottom: 15px;
+}
+.ruleslist i{
+	color: #E71A2D;
+    font-size: 14px;
+    margin-right: 10px;
+}
+.org-details1
+{
+	background: #10141E;
+    padding-top: 70px;
+    padding-bottom: 25px;
+}
+/* selection page */
+.org-head1{
+	    font-weight: normal;
+    font-size: 24px;
+    text-align: left;
+    color: #fff;
+    padding-left: 47px;
+}
+
+.formicons{
+    background: #e71a2d;
+	color: white;
+	border-radius: 50px;
+	padding: 1px 5px;
+	border: 0;
+}
+a{
+    text-decoration: none !important;
+}
+.makepaymentbutton{
+    color: white;
+    font-size: 16px;
+    
+    background-color: #e71a2d;
+   
+
+}
+.makepaymentbutton1{
+    color: white;
+    font-size: 16px;
+    padding: 11px;
+    background-color: #e71a2d;
+    border-radius: 4px;
+    
+
+}
+/* profile */
+.profilelabel{
+    font-weight: 600;
+	font-size: 15px;
+	line-height: 20px;
+	color: #fff;
+}
+
+/* payment */
+input[type=checkbox], input[type=radio] {
+    box-sizing: border-box;
+    padding: 0;
+    width: 24px;
+    height: 21px;
+  }
+  /* paymenthistory */
+
+  .turnamentcards1{
+    background: #202739;
+    
+    border-radius: 8px;
+    transition-property: #E71A2D;
+    color: gray !important;
+  }
+  .cardscolumns1 {
+    padding-left: 69px;
+    padding-right: 0;
+}
+
+.profile-input-txt1
+{
+	font-weight: 500;
+	font-size: 17px;
+	line-height: 30px;
+	
+	color: #fff;
+}
+.profile-input-txt
+{
+	text-transform:capitalize;
+}
+
+.profile-input-txt1 i
+{
+	margin-right: 5px;
+    border-radius: 100px;
+    color: #fff;
+    font-size: 9px;
+    padding: 5px;
+    background: #E71A2D;
+} 
+  
+  .dropdown dd,
+  .dropdown dt {
+    margin: 0px;
+    padding: 0px;
+  }
+  
+  .dropdown ul {
+    margin: -1px 0 0 0;
+  }
+  
+  .dropdown dd {
+    position: relative;
+  }
+  
+  
+  
+ 
+  
+  .dropdown dt a span,
+  .multiSel span {
+    cursor: pointer;
+    display: inline-block;
+    padding: 0 3px 2px 0;
+  }
+  
+  .dropdown dd ul {
+    background-color:#eaeffd;
+    border: 0;
+    color: #000;
+    display: none;
+    left: 0px;
+    padding: 2px 15px 2px 5px;
+    position: absolute;
+    top: 11px;
+    width: 150px;
+    list-style: none;
+   
+  }
+  
+  .dropdown span.value {
+    display: none;
+  }
+  
+  .dropdown dd ul li a {
+    padding: 6px;
+    display: block;
+    color: black;
+  }
+  .mytoggledrop {
+    display: none;
+}
+.formhide{
+    display: none;
+}
+  
+  a{
+      text-decoration: none;
+  }
+  a{
+    color: #212121;
+    margin-top: 0px;
+}
+  
+  
+  
+
+  .logoinmobile {
+    display: none;
+}
+.logincolums {
+    background:#202739;
+    min-height:160vh;
+ padding-top: 13%;
+ 
+}
+
+img.tuorcards {
+  width: 100%;
+    border-radius: 7px;
+    height: 163px;
+    margin-left: 15px;
+    margin-right: 10px;
+    
+}
+.app-txt1{
+	    color: #fff;
+    font-size: 16px;
+    font-weight: 600 !important;
+}
+.list-section1
+{
+	    padding-left: 20px;
+}
+.pricecardsection{
+    background: #000; padding: 50px;  
+}
+.truncate {
+    white-space: nowrap;
+    width: 105px;
+    overflow: hidden;
+  }
+/* orgnizer */
+.hotelname1{
+    font-size: 16px;
+line-height: 20px;
+
+color: #212121;
+}
+.hoteltime1{
+    font-size: 16px;
+line-height: 20px;
+
+color: #9E9E9E;
+}
+.makepaymentbutton2 {
+    color: white;
+    font-size: 16px;
+    padding: 5px;
+    background-color: #e71a2d;
+    border-radius: 4px;
+}
+  /* .acadamysection
+  {
+    background:linear-gradient(2deg, #f0a12ec9, #f0a12e1c), url("/assets/img/tournament\ pic.png"); background-repeat: no-repeat;background-size: cover;background-position:center; object-fit: cover;
+
+  } */
+  .selectioncard{
+    background: #202739;
+    border-radius: 8px;
+    width: 100%;
+  } 
+  .selectionrow {
+    justify-content: center;
+}
+.pricecardsection{
+
+    
+    background-color: #202739;
+    min-height: 80vh;
+}
+
+.logincolumn2 {
+    background: #10141E;
+    min-height: 110vh;
+}
+.row.footrow {
+    float: right;
+}
+span.live {
+    border-radius: 4px;
+    /* background: yellow; */
+    padding: 0px 10px;
+    font-size: 14px;
+    color: #212529;
+    background-color: #ffc107;
+    font-weight: 600;
+}
+span.game {
+    color: #fff;
+    background-color: #007bff;
+    border-radius: 4px;
+    padding: 0px 10px;
+    font-size: 14px;
+    font-weight: 600;
+}
+@media screen and (max-width: 414px){
+    .acadamysection
+    {
+      background:linear-gradient(2deg, #f0a12ec9, #f0a12e1c), url("/assets/img/tournament\ pic.png"); min-height: 10vh; background-repeat: no-repeat;background-size: cover;background-position:center; object-fit: cover;
+  
+    }
+   
+    .formhide{
+        display: block !important ;
+    }
+    .mytoggledrop {
+        margin: 0 !important;
+    }
+    .mytoggledrop {
+        display: block !important;
+    }
+    .searchbuttons {
+        display: block !important;
+    }
+    .sizeadjust {
+        width: 230px !important;
+    }
+    .ipadview {
+        display: none !important;
+    }
+    .cardscolumns {
+        padding-left: 17px;
+        padding-right: 0;
+      }
+    .rooles{
+        display: flex;
+    height: 180px;
+    overflow-x: scroll;
+    width: 393px;
+    }
+    .logoinmobile {
+        display: block !important ;
+    }
+    .ipaddnone {
+        display: block !important;
+    }
+    .row.footrow {
+        float: left;
+    }
+    .logincolums {
+        background: #000;
+        min-height: 100vh;
+     padding-top: 13%;
+     display: none;
+    }
+    .rollimage {
+        border-radius: 13px;
+        width: 247px !important;
+        height: 240px;
+        object-fit: cover;
+    }
+    .viewchange {
+        color: white;
+    }    
+    .nav-tabs .nav-link{
+        color: white;
+        font-weight: 600;
+        font-size: 18px;
+    }
+    
+    .selectioncard{
+        background: #EAEFFD;
+        border-radius: 8px;
+        width: 100% !important;
+      } 
+      .logincolumn2 {
+        background: #000;
+        min-height: 110vh;
+    }
+    
+.sportsimage {
+    max-width: 100%;
+    text-align: center;
+    margin: 10px;
+}
+img.tuorcards {
+    width: 100%;
+    border-radius: 10px;
+    height: auto;
+    
+}
+.turnamentcards {
+    background: #EAEFFD;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    transition-property: #E71A2D;
+    color: gray !important;
+    margin-bottom: 10px !important;
+}
+.turnamentcards1 {
+    background: #EAEFFD;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    transition-property: #E71A2D;
+    color: gray !important;
+    margin-bottom: 10px !important;
+}
+.bookingcard {
+    background: black;
+    border: 4px solid #FFFFFF;
+    box-sizing: border-box;
+    border-radius: 8px;
+    color: white;
+    width: auto;
+    height: auto;
+    
+}
+.pricecardsection{ 
+
+    padding: 20px;
+}
+.pricemenu{
+    padding: 30px 0;
+    max-width: 101% !important;
+    flex: 0 0 100% !important;
+
+}
+.navauto{
+    margin: auto;
+padding: 10px;
+justify-content: center;
+}
+.turnamentcards1{
+    background: #EAEFFD;
+    width: auto;
+    height: auto;
+    border-radius: 8px;
+    transition-property: #E71A2D;
+    color: gray !important;
+    margin-bottom: 10px !important;
+  }
+  .cardscolumns1 {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+@media screen and (max-width: 768px){
+
+    .logoinmobile {
+        display: block !important;
+    }
+    .mytoggledrop {
+        margin: auto;
+    }
+    .mytoggledrop {
+        display: block;
+    }
+    .loginhide {
+        display: none;
+    }
+    .hidetoggle {
+        display: none;
+    }
+    .searchbuttons{
+        display: none;
+    }
+    .ipadrow {
+        display: block;
+    }
+    .ipadview {
+        display: contents;
+    }
+    .sizeadjust{
+        width: 130px !important;
+    }
+    .ipaddnone{
+        display: none;
+    }
+    .logincolums {
+        background: #000;
+        min-height: 100vh;
+     padding-top: 13%;
+     
+    }
+    .rollimage {
+        border-radius: 13px;
+        
+        height: 240px;
+        object-fit: cover;
+        width: 216px !important;
+    }
+    .cardscolumns {
+        padding-left: 17px;
+        padding-right: 0;
+        margin-top: 13px;
+      }
+    .row.rooles {
+        height: 177px;
+        overflow: scroll;
+    }
+.sportsimage {
+    max-width: 100%;
+    text-align: center;
+    margin: 10px;
+}
+img.tuorcards {
+
+    border-radius: 10px;
+    
+    width: 284px;
+}
+.turnamentcards {
+    background: #EAEFFD;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    transition-property: #E71A2D;
+    color: gray !important;
+    margin-bottom: 10px !important;
+}
+.bookingcard {
+    background: black;
+    border: 4px solid #FFFFFF;
+    box-sizing: border-box;
+    border-radius: 8px;
+    color: white;
+    
+
+    
+}
+
+.pricecardsection{
+
+    padding: 20px;
+    background-color: black;
+    min-height: 42vh;
+}
+.pricemenu{
+    padding: 36px 7px;
+}
+.navauto{
+    margin: auto;
+padding: 10px;
+justify-content: center;
+}
+.turnamentcards1{
+    background: #EAEFFD;
+    width: auto;
+    height: auto;
+    border-radius: 8px;
+    transition-property: #E71A2D;
+    color: gray !important;
+    margin-bottom: 10px !important;
+  }
+  .cardscolumns1 {
+    padding-left: 19px;
+    padding-right: 0;
+  }
+  .sportsimage {
+    max-width:60%;
+  } 
+  .acadamysection
+  {
+    background:linear-gradient(2deg, #f0a12ec9, #f0a12e1c), url("/assets/img/tournament\ pic.png"); min-height: 20vh; background-repeat: no-repeat;background-size: cover;background-position:center; object-fit: cover;
+
+  }
+  .selectioncard{
+    background: #EAEFFD;
+    border-radius: 8px;
+    width: 153%;
+  }
+  .col-md-3.pricemenu{
+    -ms-flex: 0 0 25%;
+    flex: 0 0 25%;
+    max-width: 47%;
+}
+.logincolums {
+    background: #000;
+    min-height: 100vh;
+    padding-top: 13%;
+    display: none;
+}
+
+.col-md-6.logincolumn2 {
+    -ms-flex: 0 0 100% !important;
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+     padding: 58px;
+}
+.viewchange {
+    color: white;
+}    
+.nav-tabs .nav-link{
+    color: white;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+
+  .logincolumn2 {
+    background: #000;
+    min-height: 45vh;
+}
+.col-md-6.paymentcard {
+    -ms-flex: 0 0 50%;
+    flex: 0 0 100%;
+    max-width: 109%;
+}
+}
+@media screen and (max-width: 810px){
+
+    .logoinmobile {
+        display: block !important;
+    }
+    .mytoggledrop {
+        margin: auto;
+    }
+    .mytoggledrop {
+        display: block;
+    }
+    .loginhide {
+        display: none;
+    }
+    .hidetoggle {
+        display: none;
+    }
+    .searchbuttons{
+        display: none;
+    }
+    .ipadrow {
+        display: block;
+    }
+    .ipadview {
+        display: contents;
+    }
+    .sizeadjust{
+        width: 130px !important;
+    }
+    .ipaddnone{
+        display: none;
+    }
+    .logincolums {
+        background: #000;
+        min-height: 100vh;
+     padding-top: 13%;
+     
+    }
+    .rollimage {
+        border-radius: 13px;
+        
+        height: 240px;
+        object-fit: cover;
+        width: 216px !important;
+    }
+    .cardscolumns {
+        padding-left: 17px;
+        padding-right: 0;
+        margin-top: 13px;
+      }
+    .row.rooles {
+        height: 177px;
+        overflow: scroll;
+    }
+.sportsimage {
+    max-width: 100%;
+    text-align: center;
+    margin: 10px;
+}
+img.tuorcards {
+
+    border-radius: 10px;
+    
+    width: 100%;
+}
+.turnamentcards {
+    background: #EAEFFD;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    transition-property: #E71A2D;
+    color: gray !important;
+    margin-bottom: 10px !important;
+}
+.bookingcard {
+    background: black;
+    border: 4px solid #FFFFFF;
+    box-sizing: border-box;
+    border-radius: 8px;
+    color: white;
+    
+
+    
+}
+
+.pricecardsection{
+
+    padding: 20px;
+    background-color: black;
+    min-height: 42vh;
+}
+.pricemenu{
+    padding: 36px 7px;
+}
+.navauto{
+    margin: auto;
+padding: 10px;
+justify-content: center;
+}
+.turnamentcards1{
+    background: #202739;
+    width: auto;
+    height: auto;
+    border-radius: 8px;
+    transition-property: #E71A2D;
+    color: gray !important;
+    margin-bottom: 10px !important;
+  }
+  .cardscolumns1 {
+    padding-left: 19px;
+    padding-right: 0;
+  }
+  .sportsimage {
+    max-width:60%;
+  } 
+  .acadamysection
+  {
+    background:linear-gradient(2deg, #f0a12ec9, #f0a12e1c), url("/assets/img/tournament\ pic.png"); min-height: 20vh; background-repeat: no-repeat;background-size: cover;background-position:center; object-fit: cover;
+
+  }
+  .selectioncard{
+    background: #EAEFFD;
+    border-radius: 8px;
+    width: 153%;
+  }
+  .col-md-3.pricemenu{
+    -ms-flex: 0 0 25%;
+    flex: 0 0 25%;
+    max-width: 47%;
+}
+.logincolums {
+    background: #000;
+    min-height: 100vh;
+    padding-top: 13%;
+    display: none;
+}
+
+.col-md-6.logincolumn2 {
+    -ms-flex: 0 0 100% !important;
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+     padding: 58px;
+}
+.viewchange {
+    color: white;
+}    
+.nav-tabs .nav-link{
+    color: white;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+
+  .logincolumn2 {
+    background: #000;
+    min-height: 45vh;
+}
+.col-md-6.paymentcard {
+    -ms-flex: 0 0 50%;
+    flex: 0 0 100%;
+    max-width: 109%;
+}
+}
+
+@media screen and (max-width: 1024px){
+    .logoinmobile {
+        display: block !important;
+    }
+    .mytoggledrop {
+        margin: auto;
+    }
+    .mytoggledrop {
+        display: block;
+    }
+    .loginhide {
+        display: none;
+    }
+    .hidetoggle {
+        display: none;
+    }
+    .searchbuttons{
+        display: none;
+    }
+    .ipadrow {
+        display: block;
+    }
+    .ipadview {
+        display: contents;
+    }
+    .sizeadjust{
+        width: 230px !important;
+    }
+    .ipaddnone{
+        display: none;
+    }
+    .logoinmobile {
+        display: block !important;
+    background: #10141E;
+    padding-top: 10px;
+    }
+    .logincolums {
+        background: #000;
+        min-height: 100vh;
+     padding-top: 13%;
+     
+    }
+    .mytoggledrop {
+        display: block;
+    }
+    
+    .loginhide {
+        display: none;
+    }
+    .ipadrow {
+        display: block;
+    }
+    .rollimage {
+        border-radius: 13px;
+        height: 139px;
+        object-fit: cover;
+        width: 233px ;
+        margin: auto;
+    }
+    .cardscolumns {
+        padding-left: 0px;
+        padding-right: 0;
+      }
+.sportsimage {
+    max-width: 100%;
+    text-align: center;
+    margin: 10px;
+}
+img.tuorcards {
+
+    border-radius: 10px;
+    
+
+    
+}
+.row.rooles {
+    height: 177px;
+    overflow: scroll;
+    justify-content: center;
+}
+.turnamentcards {
+    background: #202739;
+    
+    height: auto;
+    border-radius: 8px;
+    transition-property: #E71A2D;
+    color: gray !important;
+    margin-bottom: 10px !important;
+}
+.bookingcard {
+    background: black;
+    border: 4px solid #FFFFFF;
+    box-sizing: border-box;
+    border-radius: 8px;
+    color: white;
+    
+
+    
+}
+.pricecardsection{
+
+    padding: 20px;
+    background-color: black;
+    min-height: 42vh;
+}
+.pricemenu{
+    padding: 36px 7px;
+}
+.navauto{
+    margin: auto;
+padding: 10px;
+justify-content: center;
+}
+.turnamentcards1{
+    background: #EAEFFD;
+    width: auto;
+    height: auto;
+    border-radius: 8px;
+    transition-property: #E71A2D;
+    color: gray !important;
+    margin-bottom: 10px !important;
+  }
+  .cardscolumns1 {
+    padding-left: 19px;
+    padding-right: 0;
+  }
+  .sportsimage {
+    max-width:60%;
+  } 
+  .acadamysection
+  {
+    background:linear-gradient(2deg, #f0a12ec9, #f0a12e1c), url("/assets/img/tournament\ pic.png"); 
+
+  }
+  .selectioncard{
+    background: #EAEFFD;
+    border-radius: 8px;
+    width: 100%;
+  }
+  .col-md-3.pricemenu{
+    -ms-flex: 0 0 25%;
+    flex: 0 0 50%;
+    max-width: 47%;
+}
+.logincolums {
+    background: #000;
+    min-height: 100vh;
+    padding-top: 13%;
+    display: none;
+}
+
+.col-md-6.logincolumn2 {
+    -ms-flex: 0 0 100% !important;
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+     padding: 58px;
+}
+.viewchange {
+    color: #000;
+}    
+.nav-tabs .nav-link{
+    color: #000;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+
+.logincolumn2 {
+    background: #EAEFFD;
+    min-height: 150vh;
+    padding: 15px !important;
+	    padding-top: 0 !important;
+}
+.signup-section1
+{
+	background: #fff;
+    min-height: 140vh;
+	padding-top:20px;
+	margin-top:25px;
+	 border-radius: 0px;
+}
+.signin-section1
+{
+	background: #fff;
+    min-height: 80vh;
+    padding: 20px;
+    margin-top: 25px;
+    border-radius: 0;
+}
+.login-sec2
+{
+    min-height: 100vh !important;
+}
+.col-md-6.paymentcard {
+    -ms-flex: 0 0 50%;
+    flex: 0 0 100%;
+    max-width: 109%;
+}
+}
+
+/* dashboard */ 
+
+.sign-sec3 {
+    background:#202739;
+   
+    padding: 20px;
+   
+}
+.dashicon {
+    margin: 4px 7px 4px 3px;
+}
+
+/* dashboard */
+
+@font-face {
+    font-family: 'my-font';
+    src: url(assets/font/Source_Sans_Pro/SourceSansPro-Regular.ttf);
+}
+
+
+.dropdown {
+position: relative;
+
+}
+
+.dropdown-content {
+display: none;
+position: absolute;
+background-color: #f9f9f9;
+min-width: 160px;
+box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+z-index: 1;
+}
+
+.dropdown-content a {
+color: black;
+padding: 12px 16px;
+text-decoration: none;
+display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+display: block;
+}
+@media screen and (max-width: 414px)  {
+.sidebar.collapsed [data-simplebar] {
+left: 1px;
+position: -webkit-sticky;
+position: sticky;
+top: 0;
+width: 259px !important;
+}
+.sidebar-toggle {
+margin-right: 1rem;
+margin-left: 0 !important;
+}
+
+.sidebar.collapsed img.rounded-pill.img-fluid {
+margin: 22px 53px !important;
+width: 58% !important;
+}
+
+img.rounded-pill.img-fluid {
+margin: 22px 55px;
+
+}
+
+.sidebar.collapsed a#dropdownMenuButton {
+display: none;
+}
+
+.sidebar.collapsed .dashicon {
+margin-left: 0 !important;
+font-size: 26px;
+margin-top: 0 !important;
+}
+
+.sidebar.collapsed span.hidedash {
+display: block !important;
+}
+}
+@media screen and (max-width: 768px)  {
+.sidebar.collapsed [data-simplebar] {
+left: 1px;
+position: -webkit-sticky;
+position: sticky;
+top: 0;
+width: 259px !important;
+}
+.sidebar-toggle {
+margin-right: 1rem;
+margin-left: 0 !important;
+}
+.sidebar.collapsed img.rounded-pill.img-fluid {
+margin: 22px 53px !important;
+width: 58% !important;
+}
+
+img.rounded-pill.img-fluid {
+margin: 22px 55px;
+
+}
+
+.sidebar.collapsed a#dropdownMenuButton {
+display: none;
+}
+
+.sidebar.collapsed .dashicon {
+margin-left: 0 !important;
+font-size: 26px;
+margin-top: 0 !important;
+}
+
+.sidebar.collapsed span.hidedash {
+display: block !important;
+}
+}
+@media screen and (max-width: 820px)  {
+.sidebar.collapsed [data-simplebar] {
+left: 1px ;
+position: -webkit-sticky;
+position: sticky;
+top: 0;
+width: 259px !important;
+}
+.sidebar-toggle {
+margin-right: 1rem;
+margin-left: 0 !important;
+}
+.sidebar.collapsed img.rounded-pill.img-fluid {
+margin: 22px 53px !important;
+width: 58% !important;
+}
+
+img.rounded-pill.img-fluid {
+margin: 22px 55px;
+
+}
+
+.sidebar.collapsed a#dropdownMenuButton {
+display: none;
+}
+
+.sidebar.collapsed .dashicon {
+margin-left: 0 !important;
+font-size: 26px;
+margin-top: 0 !important;
+}
+
+.sidebar.collapsed span.hidedash {
+display: block !important;
+}
+}
+
+@media screen and (max-width: 1040px)  {
+.sidebar.collapsed [data-simplebar] {
+left: 1px ;
+position: -webkit-sticky;
+position: sticky;
+top: 0;
+width: 259px !important;
+}
+
+.sidebar.collapsed img.rounded-pill.img-fluid {
+margin: 22px 53px !important;
+width: 58% !important;
+}
+
+img.rounded-pill.img-fluid {
+margin: 22px 55px;
+
+}
+
+.sidebar.collapsed a#dropdownMenuButton {
+display: none;
+}
+
+.sidebar.collapsed .dashicon {
+margin-left: 0 !important;
+font-size: 26px;
+margin-top: 0 !important;
+}
+
+.sidebar.collapsed span.hidedash {
+display: block !important;
+}
+}
+.sidebar.collapsed [data-simplebar] {
+left: 1px;
+position: -webkit-sticky;
+position: sticky;
+top: 0;
+width: 196px;
+}
+
+.sidebar.collapsed img.rounded-pill.img-fluid {
+margin: 22px 79px;
+width: 102px;
+}
+.sidebar.collapsed .hideicon {
+margin-left: 54px;
+font-size: 15px;
+}
+.sidebar.collapsed span.hidemaster {
+display: none;
+}
+
+.sidebar.collapsed .tab-label::after {
+content: "❯";
+width: 1em;
+height: 1em;
+text-align: end;
+transition: all 0.35s;
+position: absolute;
+right: 39px;
+display: none;
+}
+.sidebar.collapsed li.tabmenu {
+margin-left: 19px;
+}
+img.rounded-pill.img-fluid {
+margin: 22px 55px;
+
+}
+
+.sidebar.collapsed a#dropdownMenuButton {
+display: none;
+}
+
+.sidebar.collapsed .dashicon {
+margin-left: 56px;
+font-size: 26px;
+margin-top: 10px;
+}
+
+.sidebar.collapsed span.hidedash {
+display: none;
+}
+.sidebar.collapsed img.dashimage {
+width: 99px;
+margin-left: 70px;
+}
+.dash1{
+margin-top: 34px; margin-left: 15px;width: 221px;background: #eaeffd;
+}
+
+.dash2{
+list-style: none;
+}
+.dash3{
+margin: 9px 0;
+                 font-size: 18px;height: 34px;
+}
+
+.dash4{
+display: flex;
+}
+
+.dash5{
+background-color: black; padding-top: 29px; padding-bottom: 29px;
+}
+
+.dash6{
+color: white; font-size: 1.8rem;
+}
+
+.createbtn{
+background: #E71A2D;
+                                  border-radius: 4px; border: 0;font-weight: 600;
+              font-size: 14px; 
+}
+
+.dash7{
+background: #E71A2D;
+                            border-radius: 4px; border: 0;width: 80px;
+height: 24px;;
+        font-size: 11px;
+padding: 0;    margin-top: 10px; 
+}
+
+.dash8{
+background: transparent; border: 1px solid #E71A2D;
+border-radius: 4px;width: 80px; color: #E71A2D; font-weight: 600;
+height: 24px;
+font-size: 11px;
+padding: 0;    margin-top: 10px; 
+}
+
+/* sidebar tabs */
+.tab {
+    width: 100%;
+    padding: 4px;
+    overflow: hidden;
+}
+
+.tab-label {
+   
+    /* padding: 1em; */
+    /* background: #2c3e50; */
+
+cursor: pointer;
+font-size: 16px;
+color: black;
+    /* Icon */
+}
+
+/* .tab-label:hover {
+background: #1a252f;
+} */
+.tab-label::after {
+    content: "❯";
+width: 1em;
+height: 1em;
+text-align: end;
+transition: all 0.35s;
+position: absolute;
+right: 39px;
+}
+
+.tab-content {
+    max-height: 0;
+    padding: 0 1em;
+    color: #2c3e50;
+    /* background: white; */
+    transition: all 0.35s;
+}
+
+.tab-close {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1em;
+    font-size: 0.75em;
+    background: #2c3e50;
+    cursor: pointer;
+}
+
+.tab-close:hover {
+    background: #1a252f;
+}
+
+/* input:checked + .tab-label {
+background: #1a252f;
+} */
+input:checked+.tab-label::after {
+    transform: rotate(90deg);
+}
+
+input:checked~.tab-content {
+    max-height: 100vh;
+   
+}
+li.tabmenu {
+padding: 2px 0px 4px 0px;
+list-style: none;
+}
+.sign-txt1
+{
+font-size: 14px;
+margin-top:16px;
+font-weight: 600;
+color:#fff;
+letter-spacing: 0px;
+}
+#recaptcha-container
+{
+	margin-top: 15px;
+    margin-bottom: 15px;
+    margin-right: 0;
+    width: 100%;
+}
+.login-sec1
+{
+	min-height:80vh!important;
+	padding:0 !important;
+}
+
+.tour-head1
+{
+	margin-top:0px !important;
+}
+.profile-head1 h5
+{
+	font-size:30px;
+	font-weight:600;
+	text-align:left;
+	color:#fff;
+}
+.profile-head1
+{
+	background:transparent;
+	border:none;
+}
+.profile-head2
+{
+	border-bottom:1px solid #d4d4d4;
+}
+.pro-img1
+{
+	width: 130px;
+    border-radius: 50%;
+    height: 135px;
+    object-fit: cover;
+    padding-left: 0;
+    margin-bottom: 15px;
+}
+.profile-left
+{
+	position: relative;
+    background: #202739;
+    padding: 20px;
+   
+	height:100%;
+	margin-bottom:20px;
+}
+.profile-right
+{
+	position: relative;
+    background:#202739;
+    padding: 20px;
+    
+}
+.org-dash-sec
+{
+	background:#f5f7fb !important;
+}
+.forgot-sec1{
+	background: #202739;   
+    padding: 20px;
+    margin-top: 0px;
+    border-radius: 0;
+}
+.menu-sec1
+{
+	background:#10141E;
+	padding-bottom:2px !important;
+	padding-top:2px !important;
+}
+.loca-txt1 
+{
+	font-size: 24px !important;
+    font-weight: 600 !important;
+    padding-right: 50px !important;
+}
+.navbar-brand
+{
+	padding-bottom:10px !important;
+	padding-top:10px !important;
+}
+.log-txt1
+{
+	 color: white;
+    margin: 10px;
+    font-weight: 600;
+    font-size: 18px;
+}
+.footer-sec1
+{
+	background:#202739;
+	padding-bottom:5px !important;
+}
+.footer-sec1 li a
+{
+	color:#fff;
+}
+.footer-sec1 p
+{
+	color:#fff;
+}
+.footer-sec1 h5
+{
+	    font-weight: 600;
+    font-size: 20px;
+    line-height: 25px;
+    color: #fff;
+	
+}
+.tourn-drop-sec{
+	text-align:right;
+}
+.tour-select{
+	    width: 217px;
+    height: 40px;
+    padding: 8px;
+    border-radius: 8px;
+}
+.jumbotron
+{
+	background:transparent !important;
+}
+.jumbotron h5
+{
+	font-size:28px;
+	color:#fff;
+	font-weight:600;
+}
+.desc-title1
+{
+	font-size:35px;
+	font-weight:600;
+	margin-bottom:25px;
+}
+.list-section2 i {
+    font-size: 18px;
+    padding-right: 10px;
+    color: #fff;
+}
+.list-section2 h4
+{
+	font-size:16px;
+	font-weight:400;
+	margin-bottom:20px;
+}
+.list-dis
+{
+	display:table-cell;
+}
+.list-section2
+{
+	margin-top:20px;
+}
+.navbar-bran2
+{
+	padding-top: 7px !important;
+    padding-bottom: 6px !important;
+}
+.booking-section1
+{
+	padding-top:40px;
+}
+.book-card1
+{
+	background:#202739;
+	border-radius:10px;
+}
+.booking-list1
+{
+	background:#202739 !important;	
+	border:none !important;
+}
+.booking-list1 label
+{
+	color:#9E9E9E !important;
+}
+.book-card-sel
+{
+	background: #202739 !important;
+	border:none !important;
+}
+.signin-section1 h5
+{
+	color:#fff;
+}
+.signup-section1 .nav-tabs .nav-link
+{
+	color:#fff;
+}
+
+.signup-section1 .nav-tabs .nav-link.active {
+    color: #e71a2d;
+}
+.forpass h5
+{
+	color:#fff;
+}
+.forpass p
+{
+	color:#fff;
+}
+.sign-back{
+	 background-color: darkslategrey;
+            background-size: cover;
+            background-position: center;
+	min-height:1100px;
+	height:auto;
+}
+.singin-back
+{
+	min-height:800px !important;
+	height:100% !important;
+}
+.tour-img-sec img
+{
+	height:400px;
+}
+.sign-back:before,
+.sign-back:after {
+  content:""; /*kosong, for it to exist*/
+  background-color: #000;
+  opacity:0.3;
+  z-index:999999;
+  /*perfect round curve*/
+  height:100%; /*dimension of the shape*/
+  position: absolute;
+  left:0;
+  width: 100%; /*dimension of the shape*/
+}
+.mar-btn{
+	margin-bottom:20px !important;
+}
+.dis-tbl
+{
+	display:table-cell;
+}
+.pagination .active{
+	    color: #fff !important;
+    background: #e71a2d;
+    border-radius: 3px;
+}
+.pagination li{
+	    color: #fff !important;
+    background: #202739;
+    border-radius: 3px;
+	    margin-left: 5px!important;
+}
+.pagination li a{
+	    color: #fff !important;
+   
+}
+.copyright1
+{
+	    width: 100%;
+    text-align: center;
+    margin-bottom: 23px;
+    margin-top: 10px;
+}
+.copyright1 a
+{
+	color:#e71a2d !important;
+}
+
+
+/* TABLE STYLES
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.table-wrapper1 {
+ 
+}
+
+.table-wrapper1::-webkit-scrollbar {
+  height: 8px;
+}
+
+.table-wrapper1::-webkit-scrollbar-thumb {
+  background: var(--darkblue);
+  border-radius: 40px;
+}
+
+.table-wrapper1::::-webkit-scrollbar-track {
+  background: var(--white);
+  border-radius: 40px;
+}
+
+.table-wrapper1 table {
+  margin: 50px 0 20px;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.table-wrapper1 table th,
+.table-wrapper1 table td {
+  padding: 10px;
+  min-width: 75px;
+}
+
+.table-wrapper1 table th {
+  color: var(--white);
+  background: var(--darkblue);
+}
+
+.table-wrapper1 table tbody tr:nth-of-type(even) > * {
+  background: var(--lightblue);
+}
+
+.table-wrapper1 table td:first-child {
+  display: grid;
+  grid-template-columns: 25px 1fr;
+  grid-gap: 10px;
+  text-align: left;
+}
+
+.table-credits {
+  font-size: 12px;
+  margin-top: 10px;
+}
+.notification-sec1
+{
+	    border: 2px solid #ffffff;
+    padding:5px 10px;
+    border-radius: 100%;
+}
+.notification-sec1 i{
+	color:#fff;
+}
+.notification-count1
+{
+	height: 18px;
+    width: 18px;
+    background:#e71a2d;
+    font-size: 10px !important;
+    color: #ffffff !important;
+    line-height: 18px;
+    text-align: center;
+    font-weight: 700;
+    display: inline-block;
+    border-radius: 50%;
+    position: relative;
+    top: -14px !important;
+    right: 16px;
+}
+.org-table{
+	overflow-x: scroll !important;
+    width: 1350px;
+}
+@media screen and (max-width: 767px) 
+{
+	.org-table{
+	overflow-x: scroll !important;
+    width: 100% !important;
+}
+.org-table2{
+	overflow-x: scroll !important;
+    width: 100% !important;
+}
+	.org-head1
+	{
+		padding-left:0px;
+	}
+	.org-details1 ul{
+		padding-left:15px;
+	}
+	.mob-mar1
+	{
+		padding-left:0px;
+	}
+	.mobile-mar
+	{
+		 padding-top: 0!important;
+         margin-top: 10px !important;
+	}
+	.footer-sec1
+	{
+		padding-left: 0px !important;
+	}
+	.footer-logo-img1{
+		margin-bottom: 30px;
+    margin-top: 15px;
+	}
+	.foot-ctc
+	{
+		padding-left:30px !important;
+	}
+	img.tuorcards
+	{
+		width:100% !important;
+		margin-left:0 !important;
+	}
+	.tourn-drop-sec {
+    text-align: center;
+    margin-top: 20px;
+}
+	.pricemenu {
+    
+    padding-top: 0;
+	    padding-bottom: 5px;
+
+}
+.footer-sec1 ul
+{
+	padding-left:10px;
+	
+}
+	.rules-back1
+	{
+		padding-top:40px !important;
+	}
+	.bor-right1
+	{
+		border:none;
+		padding-right:0 !important;
+	}
+	.forpass
+	{
+		background:#fff;
+		margin-top: 20px;
+    padding-top: 20px;
+	}
+	.btn
+	{
+		margin-bottom:10px;
+	}
+	.rule-sec2 {
+    padding-left: 0;
+    padding-top: 30px;
+    border-top: 1px solid #f9f9f9;
+}
+.profile-name1
+{
+text-align:left;
+}	
+.profile-photo1
+{
+text-align:center;
+}	
+.dash-link1
+{
+	font-size:14px;
+	padding-right: 20px;
+}
+.dash-head1 {
+    font-weight: 600;
+    font-size: 14px;
+}
+.card
+{
+	width: 100%;
+    
+}
+.org-btn2
+{
+	width:100% !important;
+}
+.card-body
+{
+	width: 100%;
+   
+}
+.card-se1
+{
+	width: 100%;
+    min-width: 300px;
+}
+.card-body-se1
+{
+	width: 100%;
+    min-width: 300px;
+}
+.signin-section1
+{
+	background:#202739;
+}
+.signup-section1
+{
+	background:#202739;
+}
+.col-md-6.logincolumn2
+{
+	background: #10141E;
+}
+}
